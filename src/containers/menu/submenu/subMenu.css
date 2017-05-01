@@ -1,0 +1,47 @@
+
+.submenu {
+    position: relative;
+    cursor: default;
+}
+
+.submenu .padding-10 {
+    padding: 0 10px;
+}
+
+.submenu:hover .menu-btn {
+    background: #2480ee;
+    color: #fff;
+}
+
+.submenu:hover .dropdown {
+    display: block;
+}
+
+.submenu .dropdown {
+    display: none;
+    position: absolute;
+    top: 20px;
+    background: #bacad0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: 200px;
+}
+
+.submenu .menu-item {
+    display: block;
+    padding: 0 8px 0 20px;
+}
+
+.submenu .menu-item:hover {
+    background: #2480ee;
+    color: #fff;
+}
+
+.submenu .group {
+    padding: 5px 0;
+    border-top: 2px solid #cecece;
+}
+
+.submenu .group:first-child {
+    border: none;
+}

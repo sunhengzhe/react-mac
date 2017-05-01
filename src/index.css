@@ -1,0 +1,30 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Helvetica Neue, PingFang SC, Microsoft Yahei, '\5FAE\8F6F\96C5\9ED1', STXihei, '\534E\6587\7EC6\9ED1', sans-serif";
+    font-size: 14px;
+}
+
+html, body, #root, .App {
+    height: 100%;
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+body{
+    user-select: none;
+}
+
+.App {
+    position: relative;
+}
+
+a:active, a:link, a:visited, a:hover {
+    color: #000;
+}
