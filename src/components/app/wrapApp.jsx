@@ -3,19 +3,12 @@ import React, { Component } from 'react';
 import './app.css';
 
 export default (WrappedComponent) => {
-    if (!WrappedComponent.displayName) {
-        throw new Error('app must have a name');
-    }
-
     class App extends Component {
-
-        static displayName = WrappedComponent.displayName;
-        static icon = WrappedComponent.icon;
 
         constructor(...args) {
             super(...args);
             this.moveLock = true;
-            this.pos = {x: 100, y: 100};
+            this.pos = {x: 300, y: 100};
         }
 
         componentDidMount() {

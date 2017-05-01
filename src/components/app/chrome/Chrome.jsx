@@ -1,19 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import icon from './icon.png';
-
-class Chrome extends Component {
-
-    static icon = icon;
-    static displayName = 'Chrome';
-
-    render() {
-        return (
-            <div>
-
-            </div>
-        );
-    };
-}
-
-export default Chrome;
+export default () => {
+    return (
+        <div>
+            Chrome
+        </div>
+    );
+};

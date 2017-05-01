@@ -1,27 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './dock.css';
 
-import finder from '../app/finder/Finder';
-import launchpad from '../app/launchpad/Launchpad';
-import chrome from '../app/chrome/Chrome';
-import iTerm from '../app/iTerm/ITerm';
-import music from '../app/music/Music';
-import firefox from '../app/firefox/Firefox';
-import intro from '../app/intro/Intro';
-
-/** required */
-const apps = [
-    intro,
-    finder,
-    launchpad,
-    chrome,
-    iTerm,
-    music,
-    firefox,
-]
-
-export default () => {
+const Dock = ({
+    apps,
+    openApp,
+}) => {
     return (
         <div className="dock">
             {
@@ -35,13 +20,22 @@ export default () => {
                             key={app.displayName}
                             className="appicon"
                             style={style}
+                            onClick={() => {
+                                openApp(app.appid);
+                            }}
                         >
                             <i className="display-name">{ app.displayName }</i>
                         </div>
                     )
                 })
             }
-
         </div>
     )
+};
+
+Dock.propTypes = {
+    apps: PropTypes.array,
+    openApp: PropTypes.func,
 }
+
+export default Dock;

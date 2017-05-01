@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import wrapApp from '../wrapApp';
 import './intro.css';
-import icon from './icon.png';
 
 const HEADICON_SIZE = {
     from: 78,
@@ -52,9 +51,6 @@ const SOCIAL_SIZE = {
 const MAX_SCROLL = 120;
 
 class Intro extends Component {
-
-    static icon = icon;
-    static displayName = '个人介绍';
 
     state = {
         scrollTop: 0,
@@ -140,10 +136,10 @@ class Intro extends Component {
                             className="social"
                             style={socialStyle}
                         >
-                            <a href="https://github.com/sunhengzhe">
+                            <a href="https://github.com/sunhengzhe" target="_blank">
                                 <i className="fa fa-github" aria-hidden="true"></i>
                             </a>
-                            <a href="http://weibo.com/3025220401">
+                            <a href="http://weibo.com/3025220401" target="_blank">
                                 <i className="fa fa-weibo" aria-hidden="true"></i>
                             </a>
                         </div>
