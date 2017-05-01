@@ -2,8 +2,6 @@ import React from 'react';
 
 import './dock.css';
 
-const MAX_SIZE = 50;
-
 import finder from '../app/finder/Finder';
 import launchpad from '../app/launchpad/Launchpad';
 import chrome from '../app/chrome/Chrome';
@@ -23,9 +21,7 @@ const apps = [
     firefox,
 ]
 
-export default ({
-    // apps
-}) => {
+export default () => {
     return (
         <div className="dock">
             {
@@ -33,6 +29,7 @@ export default ({
                     const style = {
                         backgroundImage: `url(${app.icon})`
                     }
+
                     return (
                         <div
                             key={app.displayName}

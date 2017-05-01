@@ -10,6 +10,15 @@
     font-size: 12px;
 }
 
+.intro ::-webkit-scrollbar {
+    width: 0;
+}
+
+.intro .scroll-wrap {
+    height: 480px;
+    overflow-y: scroll;
+}
+
 .intro .headicon {
     position: absolute;
     left: 50%;
@@ -111,11 +120,6 @@
     border-radius: 5px;
 }
 
-.intro .body {
-    height: 280px;
-    overflow: hidden;
-}
-
 .intro .basic {
     overflow: hidden;
 }
@@ -183,8 +187,8 @@
 }
 
 .intro .details {
-    margin: 5px 20px;
-    padding: 5px 0;
+    margin: 10px 20px;
+    padding: 8px 0;
     border-top: 1px solid #eee;
 }
 
