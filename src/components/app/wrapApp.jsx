@@ -64,7 +64,7 @@ export default (WrappedComponent) => {
                     onMouseMove={this.onMouseMove}
                     style={{ top: this.pos.y, left: this.pos.x }}
                 >
-                    <WrappedComponent onClose={closeApp} />
+                    <WrappedComponent closeApp={closeApp} />
                 </div>
             );
         }

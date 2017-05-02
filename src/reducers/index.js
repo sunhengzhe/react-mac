@@ -6,6 +6,7 @@ const openedApps = (state = [], action) => {
             if (state.includes(action.appid)) {
                 return state;
             }
+
             return [
                 ...state,
                 action.appid,

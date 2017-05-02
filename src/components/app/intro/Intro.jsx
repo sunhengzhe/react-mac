@@ -55,7 +55,7 @@ const MAX_SCROLL = 120;
 class Intro extends Component {
 
     static propTypes = {
-        onClose: PropTypes.func.isRequired,
+        closeApp: PropTypes.func.isRequired,
     }
 
     state = {
@@ -92,7 +92,7 @@ class Intro extends Component {
     }
 
     render() {
-        const { onClose } = this.props;
+        const { closeApp } = this.props;
         const headiconStyle = {
             top: this.getScaledValue(HEADICON_TOP.from, HEADICON_TOP.to),
             width: this.getScaledValue(HEADICON_SIZE.from, HEADICON_SIZE.to),
@@ -123,7 +123,7 @@ class Intro extends Component {
                     <a
                         className="close-btn"
                         onClick={() => {
-                            onClose(manifest.appid);
+                            closeApp(manifest.appid);
                         }}
                     ></a>
                     <a

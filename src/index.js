@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux'
-import Menu from './containers/menu/Menu';
+import Menu from './components/menu/Menu';
 import Dock from './containers/dock/Dock';
 /* apps */
 import Finder from './components/app/finder/manifest';
