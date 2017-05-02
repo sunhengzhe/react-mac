@@ -6,6 +6,7 @@ import './dock.css';
 const Dock = ({
     apps,
     openApp,
+    openedApps
 }) => {
     return (
         <div className="dock">
@@ -13,12 +14,14 @@ const Dock = ({
                 apps.map((app) => {
                     const style = {
                         backgroundImage: `url(${app.icon})`
-                    }
+                    };
+
+                    let isOpened = openedApps.includes(app.appid);
 
                     return (
                         <div
                             key={app.displayName}
-                            className="appicon"
+                            className={`appicon ${isOpened ? 'opened' : ''}`}
                             style={style}
                             onClick={() => {
                                 openApp(app.appid);

@@ -4,8 +4,9 @@ import Dock from '../../components/dock/Dock';
 
 const mapStateToProps = (state) => {
     return {
-        apps: state.dockApps
-    }
+        apps: state.dockApps,
+        openedApps: state.openedApps,
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -15,9 +16,9 @@ const mapDispatchToProps = (dispatch) => {
                 type: 'OPEN_APP',
                 appid,
             });
-        }
-    }
-}
+        },
+    };
+};
 
 export default connect(
     mapStateToProps,

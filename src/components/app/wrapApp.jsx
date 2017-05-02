@@ -1,30 +1,18 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 import './app.css';
 
 export default (WrappedComponent) => {
     class App extends Component {
 
+        static propTypes = {
+            closeApp: PropTypes.func,
+        };
+
         constructor(...args) {
             super(...args);
             this.moveLock = true;
             this.pos = {x: 300, y: 100};
-        }
-
-        componentDidMount() {
-
-        }
-
-        componentWillUnmount() {
-
-        }
-
-        onClose() {
-
-        }
-
-        onQuit() {
-
         }
 
         onMouseDown = (e) => {
@@ -65,6 +53,7 @@ export default (WrappedComponent) => {
         }
 
         render() {
+            const { closeApp } = this.props;
             return (
                 <div
                     ref={(ele) => this.ele = ele}
@@ -75,7 +64,7 @@ export default (WrappedComponent) => {
                     onMouseMove={this.onMouseMove}
                     style={{ top: this.pos.y, left: this.pos.x }}
                 >
-                    <WrappedComponent />
+                    <WrappedComponent onClose={closeApp} />
                 </div>
             );
         }

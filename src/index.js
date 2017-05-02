@@ -35,9 +35,18 @@ const store = createStore(reducers, {
 const Main = connect(
     (state) => ({
         openedApps: state.openedApps
+    }),
+    (dispatch) => ({
+        closeApp: (appid) => {
+            dispatch({
+                type: 'CLOSE_APP',
+                appid,
+            })
+        }
     })
 )(({
-    openedApps
+    openedApps,
+    closeApp,
 }) => {
     return (
         <div className="App">
@@ -46,7 +55,7 @@ const Main = connect(
             {
                 openedApps.map((appid) => {
                     const App = require(`./components/app/${appid}`).default;
-                    return <App key={appid} />
+                    return <App key={appid} closeApp={closeApp} />
                 })
             }
         </div>

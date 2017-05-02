@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import wrapApp from '../wrapApp';
+import manifest from './manifest';
 import './intro.css';
 
 const HEADICON_SIZE = {
@@ -52,6 +54,10 @@ const MAX_SCROLL = 120;
 
 class Intro extends Component {
 
+    static propTypes = {
+        onClose: PropTypes.func.isRequired,
+    }
+
     state = {
         scrollTop: 0,
     }
@@ -86,6 +92,7 @@ class Intro extends Component {
     }
 
     render() {
+        const { onClose } = this.props;
         const headiconStyle = {
             top: this.getScaledValue(HEADICON_TOP.from, HEADICON_TOP.to),
             width: this.getScaledValue(HEADICON_SIZE.from, HEADICON_SIZE.to),
@@ -113,7 +120,12 @@ class Intro extends Component {
                     style={headiconStyle}
                 ></div>
                 <div className="scroll-wrap" ref={(ele) => this.ele = ele}>
-                    <a className="close-btn"></a>
+                    <a
+                        className="close-btn"
+                        onClick={() => {
+                            onClose(manifest.appid);
+                        }}
+                    ></a>
                     <a
                         className="more"
                         onClick={this.showMore}
