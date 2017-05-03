@@ -36,4 +36,24 @@ const dockApps = (state = [], action) => {
     }
 }
 
-export default combineReducers({ openedApps, dockApps });
+const allApps = (state = [], action) => {
+    switch (action.type) {
+        case 'INSTALL_APP':
+            if (state.includes(action.appid)) {
+                return state;
+            }
+
+            return [
+                ...state,
+                action.appid,
+            ];
+        case 'UNINSTALL_APP':
+            return [
+                ...state.filter(appid => appid !== action.appid)
+            ];
+        default:
+            return state;
+    }
+}
+
+export default combineReducers({ openedApps, dockApps, allApps });

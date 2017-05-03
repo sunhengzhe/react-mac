@@ -22,6 +22,10 @@ import bg from './images/sky.jpg';
 const store = createStore(reducers, {
     dockApps: [
         Intro,
+        Launchpad,
+    ],
+    allApps: [
+        Intro,
         Finder,
         Launchpad,
         Chrome,
@@ -54,7 +58,7 @@ const Main = connect(
             <Dock />
             {
                 openedApps.map((appid) => {
-                    const App = require(`./components/app/${appid}`).default;
+                    const App = require(`./${appid}`).default;
                     return <App key={appid} closeApp={closeApp} />
                 })
             }

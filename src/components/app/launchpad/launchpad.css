@@ -25,6 +25,12 @@
     z-index: 1;
 }
 
+.launchpad .appname {
+    display: inline-block;
+    margin-top: 5px;
+    color: #ececec;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
