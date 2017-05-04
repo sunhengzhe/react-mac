@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import ControlBtnGroup from '../../lib/control-btn-group/ControlBtnGroup';
 import wrapApp from '../wrapApp';
 import manifest from './manifest';
 import './intro.css';
@@ -120,12 +121,11 @@ class Intro extends Component {
                     style={headiconStyle}
                 ></div>
                 <div className="scroll-wrap" ref={(ele) => this.ele = ele}>
-                    <a
-                        className="close-btn"
-                        onClick={() => {
+                    <ControlBtnGroup
+                        onClose={() => {
                             closeApp(manifest.appid);
                         }}
-                    ></a>
+                    />
                     <a
                         className="more"
                         onClick={this.showMore}
@@ -240,4 +240,7 @@ class Intro extends Component {
     };
 }
 
-export default wrapApp(Intro);
+export default wrapApp(Intro, {
+    initWidth: 320,
+    initHeight: 480,
+});

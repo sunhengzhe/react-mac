@@ -1,0 +1,94 @@
+/* 控制按钮组 */
+.control-btn-wrap {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 50px;
+    height: 12px;
+}
+
+.control-btn-wrap .btn {
+    position: absolute;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.control-btn-wrap .btn::before,
+.control-btn-wrap .btn::after {
+    display: none;
+    content: '';
+    position: absolute;
+}
+
+.control-btn-wrap .btn:hover::before,
+.control-btn-wrap .btn:hover::after {
+    display: block;
+}
+
+/* 关闭按钮 */
+.control-btn-wrap .close-btn {
+    left: 0;
+    background: #fc635d;
+}
+
+.control-btn-wrap .close-btn::before,
+.control-btn-wrap .close-btn::after {
+    left: 2px;
+    top: 6px;
+    width: 8px;
+    height: 1px;
+    background: #000;
+}
+
+.control-btn-wrap .close-btn::before {
+    transform: rotate(45deg);
+}
+
+.control-btn-wrap .close-btn::after {
+    transform: rotate(-45deg);
+}
+
+/* 缩小按钮 */
+.control-btn-wrap .min-btn {
+    left: 19px;
+    background: #fbbb4d;
+}
+
+.control-btn-wrap .min-btn::before {
+    left: 3px;
+    top: 5px;
+    width: 6px;
+    height: 1px;
+    background: #000;
+}
+
+/* 放大按钮 */
+.control-btn-wrap .max-btn {
+    left: 38px;
+    background: #3cc24f;
+}
+
+.control-btn-wrap .max-btn::before,
+.control-btn-wrap .max-btn::after {
+    width: 0;
+    height: 0;
+    border: 2px solid #000;
+}
+
+.control-btn-wrap .max-btn::before {
+    right: 3px;
+    top: 3px;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+}
+
+.control-btn-wrap .max-btn::after {
+    left: 3px;
+    bottom: 3px;
+    border: 2px solid #000;
+    border-top-color: transparent;
+    border-right-color: transparent;
+}
+

@@ -1,11 +1,11 @@
 .launchpad {
     position: absolute;
     left: 0; top: 0; right: 0; bottom: 0;
-    z-index: 999;
+    z-index: 99998;
     animation: fadeIn .3s ease-in-out;
 }
 
-.launchpad.willQuit {
+.launchpad.will-quit {
     animation: fadeOut .3s ease-in-out forwards;
 }
 
@@ -13,6 +13,7 @@
     position: absolute;
     left: 0; top: 0; right: 0; bottom: 0;
     background: url('../../../images/sky.jpg');
+    background-size: cover;
     filter: blur(20px);
     margin: -30px;
     z-index: -1;
@@ -31,6 +32,21 @@
     color: #ececec;
 }
 
+.launchpad .app-wrap {
+    position: absolute;
+    text-align: center;
+}
+
+.launchpad .appicon {
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: .3s;
+}
+
+.launchpad .appicon.will-open {
+    animation: appOpen .2s ease-out;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -46,5 +62,16 @@
     }
     to {
         opacity: 0;
+    }
+}
+
+@keyframes appOpen {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0.5;
+        transform: scale(1.8);
     }
 }

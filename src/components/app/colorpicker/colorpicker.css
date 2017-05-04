@@ -1,0 +1,44 @@
+.color-picker {
+    width: 800px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.color-picker .header {
+    height: 40px;
+    background: #00a0e8;
+}
+
+.color-picker .body {
+    height: 460px;
+    background: #fff;
+}
+
+.color-picker .info-panel {
+    width: 240px;
+    height: 100%;
+    float: left;
+}
+
+.color-picker .content-panel {
+    position: relative;
+    height: 100%;
+    margin-left: 250px;
+    background: #eee url('data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill-opacity=".25"><rect x="20" width="20" height="20" /><rect y="20" width="20" height="20" /></svg>');
+    overflow-y: scroll;
+}
+
+.color-picker .color-group {
+    float: left;
+    width: 150px;
+    height: 150px;
+    margin: 25px 0 0 25px;
+}
+
+.color-picker .color {
+    float: left;
+    width: 45px;
+    height: 45px;
+    margin: 0 5px 5px 0;
+    border-radius: 5px;
+}

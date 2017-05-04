@@ -4,14 +4,8 @@ import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux'
 import Menu from './components/menu/Menu';
 import Dock from './containers/dock/Dock';
-/* apps */
-import Finder from './components/app/finder/manifest';
-import Launchpad from './components/app/launchpad/manifest';
-import Chrome from './components/app/chrome/manifest';
-import ITerm from './components/app/iTerm/manifest';
-import Music from './components/app/music/manifest';
-import Firefox from './components/app/firefox/manifest';
-import Intro from './components/app/intro/manifest';
+/* init state */
+import INIT_STATE from './core/initState';
 
 import reducers from './reducers';
 
@@ -19,21 +13,7 @@ import './index.css';
 import bg from './images/sky.jpg';
 
 /** store */
-const store = createStore(reducers, {
-    dockApps: [
-        Intro,
-        Launchpad,
-    ],
-    allApps: [
-        Intro,
-        Finder,
-        Launchpad,
-        Chrome,
-        ITerm,
-        Music,
-        Firefox,
-    ],
-});
+const store = createStore(reducers, INIT_STATE);
 
 /** 主程序入口 */
 const Main = connect(
@@ -59,7 +39,10 @@ const Main = connect(
             {
                 openedApps.map((appid) => {
                     const App = require(`./${appid}`).default;
-                    return <App key={appid} closeApp={closeApp} />
+                    return <App
+                        key={appid}
+                        closeApp={closeApp}
+                    />
                 })
             }
         </div>

@@ -73,47 +73,6 @@
     color: rgba(0, 0, 0, .4);
 }
 
-.intro .close-btn {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    width: 10px;
-    height: 10px;
-    background: #dee1e3;
-    border-radius: 50%;
-    border: 1px solid #d2d7d9;
-}
-
-.intro .close-btn:hover {
-    background: #fc635d;
-    border-color: #fc635d;
-}
-
-.intro .close-btn:hover::before,
-.intro .close-btn:hover::after {
-    display: block;
-}
-
-.intro .close-btn::before,
-.intro .close-btn::after {
-    display: none;
-    content: '';
-    position: absolute;
-    left: 1px;
-    top: 5px;
-    width: 8px;
-    height: 1px;
-    background: #000;
-}
-
-.intro .close-btn::before {
-    transform: rotate(45deg);
-}
-
-.intro .close-btn::after {
-    transform: rotate(-45deg);
-}
-
 .intro .header{
     height: 190px;
     background: #ddeefe;

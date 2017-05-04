@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './app.css';
 
-export default (WrappedComponent) => {
+export default (
+    WrappedComponent,
+    options = {}
+) => {
     class App extends Component {
 
         static propTypes = {
@@ -11,21 +14,38 @@ export default (WrappedComponent) => {
 
         constructor(...args) {
             super(...args);
+            const { initWidth, initHeight } = options;
             this.moveLock = true;
-            this.pos = {x: 300, y: 100};
+            this.pos = {
+                x: initWidth ? (window.innerWidth - initWidth) / 2 : 300,
+                y: initHeight ? (window.innerHeight - initHeight) / 2 : 100
+            };
         }
 
+        /**
+         * 鼠标按下
+         * @memberof App
+         */
         onMouseDown = (e) => {
             this.moveLock = false;
             const { clientX, clientY } = e;
             this.lastX = clientX;
             this.lastY = clientY;
+            this.ele.style.zIndex = +((+new Date() + '').slice(5, -3));
         }
 
+        /**
+         * 鼠标抬起
+         * @memberof App
+         */
         onMouseUp = (e) => {
             this.moveLock = true;
         }
 
+        /**
+         * 鼠标移动
+         * @memberof App
+         */
         onMouseMove = (e) => {
             if (!this.moveLock) {
                 const { clientX, clientY } = e;

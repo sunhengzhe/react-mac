@@ -24,26 +24,21 @@ class Launchpad extends Component {
         apps: PropTypes.array.isRequired,
     }
 
-    state = {
-        willQuit: false
-    }
-
     willQuit = (callback) => {
-        this.setState({ willQuit: true }, () => {
-            setTimeout(() => {
-                this.props.closeApp(manifest.appid);
-                callback && callback();
-            }, 300);
-        });
+        this.wrap.classList.add('will-quit');
+        setTimeout(() => {
+            this.props.closeApp(manifest.appid);
+            callback && callback();
+        }, 300);
     }
 
     render() {
-        const { willQuit } = this.state;
         const { apps, openApp } = this.props;
         return (
             <div
-                className={`launchpad ${willQuit ? 'willQuit' : ''}`}
-                onClick={this.willQuit}
+                ref={(node) => this.wrap = node}
+                className="launchpad"
+                onClick={() => this.willQuit()}
             >
                 <div className="bg-wrap"></div>
                 <div className="body">
@@ -51,18 +46,15 @@ class Launchpad extends Component {
                         apps.map((app, index) => {
 
                             const wrapStyle = {
-                                position: 'absolute',
                                 left: MARGIN_LEFT + (BOX_WIDTH + HORIZON_MARGIN) * (index % COL_NUM),
                                 top: MARGIN_TOP + (BOX_HEIGHT + VERTICAL_MARGIN) * parseInt(index / COL_NUM, 10),
-                                backgroundImage: `url(${app.icon})`,
-                                textAlign: 'center'
                             };
 
                             const iconStyle = {
-                                width: 70,
-                                height: 70,
+                                width: BOX_WIDTH,
+                                height: BOX_WIDTH,
                                 backgroundImage: `url(${app.icon})`,
-                                backgroundSize: '70px 70px',
+                                backgroundSize: `${BOX_WIDTH}px ${BOX_WIDTH}px`,
                             }
 
                             return (
@@ -72,6 +64,7 @@ class Launchpad extends Component {
                                     style={wrapStyle}
                                     onClick={(e) => {
                                         e.stopPropagation();
+                                        e.target.classList.add('will-open');
                                         this.willQuit(() => {
                                             openApp(app.appid);
                                         });
