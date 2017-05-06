@@ -20,6 +20,10 @@
     float: left;
 }
 
+.submenu:hover {
+    z-index: 99999;
+}
+
 .submenu .padding-10 {
     padding: 0 10px;
 }

@@ -57,6 +57,7 @@ class Intro extends Component {
 
     static propTypes = {
         closeApp: PropTypes.func.isRequired,
+        DraggableArea: PropTypes.any,
     }
 
     state = {
@@ -93,7 +94,7 @@ class Intro extends Component {
     }
 
     render() {
-        const { closeApp } = this.props;
+        const { closeApp, DraggableArea } = this.props;
         const headiconStyle = {
             top: this.getScaledValue(HEADICON_TOP.from, HEADICON_TOP.to),
             width: this.getScaledValue(HEADICON_SIZE.from, HEADICON_SIZE.to),
@@ -113,7 +114,7 @@ class Intro extends Component {
             fontSize: this.getScaledValue(SOCIAL_SIZE.from, SOCIAL_SIZE.to),
         };
         return (
-            <div
+            <DraggableArea
                 className="intro" onScroll={this.onScroll}
             >
                 <div
@@ -235,7 +236,7 @@ class Intro extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </DraggableArea>
         );
     };
 }

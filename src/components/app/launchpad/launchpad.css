@@ -1,7 +1,7 @@
 .launchpad {
     position: absolute;
     left: 0; top: 0; right: 0; bottom: 0;
-    z-index: 99998;
+    z-index: 99997;
     animation: fadeIn .3s ease-in-out;
 }
 
@@ -45,33 +45,4 @@
 
 .launchpad .appicon.will-open {
     animation: appOpen .2s ease-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-
-@keyframes appOpen {
-    from {
-        opacity: 1;
-        transform: scale(1);
-    }
-    to {
-        opacity: 0.5;
-        transform: scale(1.8);
-    }
 }

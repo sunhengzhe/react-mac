@@ -6,6 +6,7 @@ export default (
     WrappedComponent,
     options = {}
 ) => {
+
     class App extends Component {
 
         static propTypes = {
@@ -20,6 +21,19 @@ export default (
                 x: initWidth ? (window.innerWidth - initWidth) / 2 : 300,
                 y: initHeight ? (window.innerHeight - initHeight) / 2 : 100
             };
+
+            // 可拖拽区域
+            this.DraggableArea = (props) => (
+                <div
+                    {...props}
+                    onMouseDown={this.onMouseDown}
+                    onMouseUp={this.onMouseUp}
+                    onMouseOut={this.onMouseOut}
+                    onMouseMove={this.onMouseMove}
+                >
+                    { props.children }
+                </div>
+            );
         }
 
         /**
@@ -78,13 +92,16 @@ export default (
                 <div
                     ref={(ele) => this.ele = ele}
                     className="app"
-                    onMouseDown={this.onMouseDown}
-                    onMouseUp={this.onMouseUp}
-                    onMouseOut={this.onMouseUp}
-                    onMouseMove={this.onMouseMove}
-                    style={{ top: this.pos.y, left: this.pos.x }}
+                    style={{
+                        top: this.pos.y,
+                        left: this.pos.x,
+                        zIndex: +((+new Date() + '').slice(5, -3))
+                    }}
                 >
-                    <WrappedComponent closeApp={closeApp} />
+                    <WrappedComponent
+                        closeApp={closeApp}
+                        DraggableArea={this.DraggableArea}
+                    />
                 </div>
             );
         }

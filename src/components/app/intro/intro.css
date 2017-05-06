@@ -1,13 +1,9 @@
 .intro {
     width: 320px;
     height: 480px;
-    position: absolute;
-    left: 40%;
-    top: 20%;
-    border-radius: 5px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, .3);
     background: #fff;
     font-size: 12px;
+    border-radius: 5px;
 }
 
 .intro ::-webkit-scrollbar {
