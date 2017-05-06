@@ -7,20 +7,24 @@ import Music from '../components/app/music/manifest';
 import Firefox from '../components/app/firefox/manifest';
 import Intro from '../components/app/intro/manifest';
 import ColorPicker from '../components/app/colorpicker/manifest';
+import Photo from '../components/app/photo/manifest';
 
 export default {
     dockApps: [
         Intro,
         Launchpad,
+        Photo,
+        ITerm,
         ColorPicker,
     ],
     allApps: [
         Intro,
         Finder,
+        Photo,
         Chrome,
+        Firefox,
         ITerm,
         Music,
-        Firefox,
         ColorPicker,
     ],
 };

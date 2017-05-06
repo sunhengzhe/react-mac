@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-
+import { openApp, closeApp } from '../../../reducers/openedApps';
 import Launchpad from '../../../components/app/launchpad/Launchpad';
 
 const mapStateToProps = (state) => {
@@ -11,16 +11,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         openApp: (appid) => {
-            dispatch({
-                type: 'OPEN_APP',
-                appid,
-            });
+            dispatch(openApp(appid));
         },
         closeApp: (appid) => {
-            dispatch({
-                type: 'CLOSE_APP',
-                appid,
-            });
+            dispatch(closeApp(appid));
         }
     }
 };

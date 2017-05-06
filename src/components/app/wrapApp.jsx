@@ -26,33 +26,36 @@ export default (
             this.DraggableArea = (props) => (
                 <div
                     {...props}
-                    onMouseDown={this.onMouseDown}
-                    onMouseUp={this.onMouseUp}
-                    onMouseOut={this.onMouseOut}
-                    onMouseMove={this.onMouseMove}
+                    onMouseDown={this.onDraggableAreaMouseDown}
+                    onMouseUp={this.onDraggableAreaMouseUp}
+                    onMouseOut={this.onDraggableAreaMouseOut}
+                    onMouseMove={this.onDraggableAreaMouseMove}
                 >
                     { props.children }
                 </div>
             );
         }
 
+        onAppMouseDown = () => {
+            this.ele.style.zIndex = +((+new Date() + '').slice(5, -3));
+        }
+
         /**
          * 鼠标按下
          * @memberof App
          */
-        onMouseDown = (e) => {
+        onDraggableAreaMouseDown = (e) => {
             this.moveLock = false;
             const { clientX, clientY } = e;
             this.lastX = clientX;
             this.lastY = clientY;
-            this.ele.style.zIndex = +((+new Date() + '').slice(5, -3));
         }
 
         /**
          * 鼠标抬起
          * @memberof App
          */
-        onMouseUp = (e) => {
+        onDraggableAreaMouseUp = (e) => {
             this.moveLock = true;
         }
 
@@ -60,7 +63,7 @@ export default (
          * 鼠标移动
          * @memberof App
          */
-        onMouseMove = (e) => {
+        onDraggableAreaMouseMove = (e) => {
             if (!this.moveLock) {
                 const { clientX, clientY } = e;
                 const disX = clientX - this.lastX;
@@ -97,6 +100,7 @@ export default (
                         left: this.pos.x,
                         zIndex: +((+new Date() + '').slice(5, -3))
                     }}
+                    onMouseDown={this.onAppMouseDown}
                 >
                     <WrappedComponent
                         closeApp={closeApp}

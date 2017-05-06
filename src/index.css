@@ -34,6 +34,10 @@ a:active, a:link, a:visited, a:hover {
     text-align: center;
 }
 
+.default-header {
+    background: linear-gradient(#f0f0f0, #d5d5d5);
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

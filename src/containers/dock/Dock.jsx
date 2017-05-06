@@ -1,5 +1,5 @@
-import { connect } from 'react-redux'
-
+import { connect } from 'react-redux';
+import { openApp } from '../../reducers/openedApps';
 import Dock from '../../components/dock/Dock';
 
 const mapStateToProps = (state) => {
@@ -12,10 +12,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         openApp: (appid) => {
-            dispatch({
-                type: 'OPEN_APP',
-                appid,
-            });
+            dispatch(openApp(appid));
         },
     };
 };

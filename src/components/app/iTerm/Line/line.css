@@ -1,0 +1,36 @@
+.iTerm .line {
+    padding: .1em;
+    text-indent: .2em;
+}
+
+.iTerm .space {
+  display: inline-block;
+  width: .5em;
+}
+
+.iTerm .headIcon {
+  color: #67f86f;
+  width: 1em;
+  height: 1em;
+}
+
+.iTerm .dir {
+  color: #68fdfe;
+}
+
+.iTerm .cursor {
+    background-color: #ddd;
+    color: #fff !important;
+}
+
+.iTerm .warning {
+    color: #fffa72;
+}
+
+.iTerm .danger {
+    color: #c71e12;
+}
+
+.iTerm .info {
+    color: #00c120;
+}

@@ -117,7 +117,7 @@ class ColorPicker extends Component {
 
     render() {
         const { selectedColor, peekColor, tips } = this.state;
-        const { DraggableArea } = this.props;
+        const { DraggableArea, closeApp } = this.props;
 
         return (
             <div className="color-picker">
@@ -126,7 +126,7 @@ class ColorPicker extends Component {
                 >
                     <ControlBtnGroup
                         onClose={() => {
-                            this.props.closeApp(manifest.appid);
+                            closeApp(manifest.appid);
                         }}
                         onMax={() => {
 
