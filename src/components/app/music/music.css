@@ -14,6 +14,18 @@
     height: 52px;
     left: 0; top: 0; right: 0;
     background: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+    text-align: center;
+    font-size: 13px;
+}
+
+.music .title {
+    margin-top: 12px;
+}
+
+.music .sub-title {
+    margin-top: 5px;
+    color: #aaa;
 }
 
 .music .control {
@@ -21,4 +33,31 @@
     height: 52px;
     left: 0; bottom: 0; right: 0;
     background: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+}
+
+.music .close-btn {
+    position: absolute;
+    left: 5px; top: 5px;
+    width: 12px;
+    height: 12px;
+}
+
+.music .close-btn::before,
+.music .close-btn::after {
+    position: absolute;
+    display: block;
+    content: '';
+    width: 12px;
+    height: 2px;
+    background: gray;
+    top: 6px;
+}
+
+.music .close-btn::before {
+    transform: rotate(45deg);
+}
+
+.music .close-btn::after {
+    transform: rotate(-45deg);
 }
