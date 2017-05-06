@@ -24,8 +24,12 @@ class Launchpad extends Component {
         apps: PropTypes.array.isRequired,
     }
 
+    state = {
+        willQuit: false,
+    }
+
     willQuit = (callback) => {
-        this.wrap.classList.add('will-quit');
+        this.setState({ willQuit: true });
         setTimeout(() => {
             this.props.closeApp(manifest.appid);
             callback && callback();
@@ -34,10 +38,10 @@ class Launchpad extends Component {
 
     render() {
         const { apps, openApp } = this.props;
+        const { willQuit } = this.state;
         return (
             <div
-                ref={(node) => this.wrap = node}
-                className="launchpad"
+                className={`launchpad ${willQuit ? 'will-quit' : ''}`}
                 onClick={() => this.willQuit()}
             >
                 <div className="bg-wrap"></div>

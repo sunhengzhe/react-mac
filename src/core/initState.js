@@ -13,7 +13,7 @@ export default {
     dockApps: [
         Intro,
         Launchpad,
-        Photo,
+        Music,
         ITerm,
         ColorPicker,
     ],
@@ -27,4 +27,5 @@ export default {
         Music,
         ColorPicker,
     ],
+    notifications: []
 };

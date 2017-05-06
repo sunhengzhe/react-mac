@@ -5,6 +5,7 @@
     left: 10px;
     width: 50px;
     height: 12px;
+    z-index: 10;
 }
 
 .control-btn-wrap .btn {

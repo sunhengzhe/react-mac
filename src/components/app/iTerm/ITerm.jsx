@@ -174,4 +174,7 @@ class ITerm extends Component {
     }
 };
 
-export default wrapApp(ITerm);
+export default wrapApp(ITerm, {
+    initWidth: 585,
+    initHeight: 440,
+});

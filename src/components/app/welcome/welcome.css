@@ -1,0 +1,60 @@
+.welcome {
+    width: 360px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.welcome .header {
+    height: 50px;
+    background: #fff;
+    color: #4d4d4d;
+    text-align: center;
+    line-height: 50px;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.welcome .body {
+    height: 180px;
+    padding: 10px;
+    background: #fafafa;
+    line-height: 1.4;
+    color: gray;
+    font-size: 12px;
+}
+
+.welcome .body .title {
+    color: #4d4d4d;
+    font-size: 13px;
+}
+
+.welcome .body ul {
+    margin: 8px 0;
+}
+
+.welcome .body li {
+    margin-bottom: 5px;
+}
+
+.welcome .footer {
+    height: 50px;
+    background: #fff;
+}
+
+.welcome .confirm-btn {
+    border-radius: 2px;
+    float: right;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    background: #178eeb;
+    margin-top: 10px;
+    margin-right: 10px;
+    padding: 0 30px;
+    color: #fff;
+    font-size: 13px;
+}
+
+.welcome .confirm-btn:hover {
+    background: #43b3fb;
+    cursor: pointer;
+}

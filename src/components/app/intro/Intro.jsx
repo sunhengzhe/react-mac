@@ -57,6 +57,7 @@ class Intro extends Component {
 
     static propTypes = {
         closeApp: PropTypes.func.isRequired,
+        removeNotification: PropTypes.func,
         DraggableArea: PropTypes.any,
     }
 
@@ -65,7 +66,7 @@ class Intro extends Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this.timeout);
+        clearInterval(this.interval);
     }
 
     onScroll = (e) => {
@@ -83,12 +84,12 @@ class Intro extends Component {
     }
 
     showMore = () => {
-        this.timeout = setInterval(() => {
+        this.interval = setInterval(() => {
             if (this.ele.scrollTop < MAX_SCROLL - 10) {
                 this.ele.scrollTop += 10;
             } else {
                 this.ele.scrollTop = MAX_SCROLL;
-                clearInterval(this.timeout);
+                clearInterval(this.interval);
             }
         }, 16);
     }

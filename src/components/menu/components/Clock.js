@@ -4,7 +4,7 @@ import { moment } from '../../../utils';
 
 class Clock extends Component {
     state = {
-        time: ''
+        time: moment().format('M月D日 周W HH:mm:ss'),
     };
 
     constructor(...args) {

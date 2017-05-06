@@ -10,7 +10,8 @@ export default (
     class App extends Component {
 
         static propTypes = {
-            closeApp: PropTypes.func,
+            closeApp: PropTypes.func.isRequired,
+            addNotification: PropTypes.func,
         };
 
         constructor(...args) {
@@ -90,7 +91,6 @@ export default (
         }
 
         render() {
-            const { closeApp } = this.props;
             return (
                 <div
                     ref={(ele) => this.ele = ele}
@@ -103,7 +103,7 @@ export default (
                     onMouseDown={this.onAppMouseDown}
                 >
                     <WrappedComponent
-                        closeApp={closeApp}
+                        { ...this.props }
                         DraggableArea={this.DraggableArea}
                     />
                 </div>
