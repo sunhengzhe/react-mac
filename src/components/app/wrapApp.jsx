@@ -29,7 +29,7 @@ export default (
                     {...props}
                     onMouseDown={this.onDraggableAreaMouseDown}
                     onMouseUp={this.onDraggableAreaMouseUp}
-                    onMouseOut={this.onDraggableAreaMouseOut}
+                    onMouseLeave={this.onDraggableAreaMouseUp}
                     onMouseMove={this.onDraggableAreaMouseMove}
                 >
                     { props.children }

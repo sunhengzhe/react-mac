@@ -28,9 +28,9 @@ class Notification extends Component {
     }
 
     willQuit(callback) {
+        callback && callback();
         this.setState({ willQuit: true });
         this.animTimeout = setTimeout(() => {
-            callback && callback();
             this.props.destroy();
         }, 500);
     }

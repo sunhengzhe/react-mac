@@ -2,6 +2,6 @@ import icon from './icon.png';
 
 export default {
     displayName: 'Finder',
-    appid: 'finder/Finder',
+    appid: 'components/app/welcome/Welcome',
     icon,
 };

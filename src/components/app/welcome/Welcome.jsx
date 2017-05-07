@@ -21,7 +21,7 @@ export default wrapApp(({
                     欢迎
                 </div>
                 <div className="body">
-                    <p className="title">全新的系统已经准备完毕，目前可以使用的 APP 如下，欢迎使用~</p>
+                    <p className="title">全新的系统已经准备完毕，目前可以使用的 APP 如下，欢迎体验~</p>
                     <ul>
                         <li>1、个人介绍</li>
                         <li>2、launchpad</li>
