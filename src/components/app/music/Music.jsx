@@ -174,7 +174,7 @@ class Music extends Component {
                             onMouseEnter={this.onMouseEnterCover}
                         >
                             <div
-                                className="intro"
+                                className="intro-panel"
                                 ref={node => {this.introPanel = node}}
                             >
                                 <a
@@ -187,7 +187,7 @@ class Music extends Component {
                                 <p className="sub-title">{ `${author} -- ${album}` }</p>
                             </div>
                             <div
-                                className="control"
+                                className="control-panel"
                                 ref={node => {this.controlPanel = node}}
                             >
                                 <div className="left-wrap pull-left">
