@@ -30,26 +30,7 @@ class Music extends Component {
 
     componentDidMount() {
         // 添加播放结束事件
-        this.audio.addEventListener('ended', () => {
-            let { index } = this.state;
-            if (++index === MUSIC_LIST.length) {
-                // 已经是最后一首
-                index = 0;
-            }
-            this.setState({
-                index,
-                currentTime: 0,
-            }, () => {
-                this.audio.play();
-            });
-            // 发送通知
-            const { title, album, author } = MUSIC_LIST[index];
-            this.props.addNotification({
-                icon,
-                title,
-                content: `${author} -- ${album}`,
-            })
-        });
+        this.audio.addEventListener('ended', this.nextSong);
     }
 
     componentWillUnmount() {
@@ -76,6 +57,66 @@ class Music extends Component {
             this.introPanel.style.opacity = 0;
             this.controlPanel.style.opacity = 0;
         }, 500);
+    }
+
+    play = () => {
+        clearInterval(this.interval);
+        this.audio.play();
+        this.interval = setInterval(() => {
+            if (!this.seeking) {
+                // 没有在拖动进度条的时候更新进度条
+                this.setState({ currentTime: this.audio.currentTime });
+            }
+        }, 1000);
+        this.setState({ isPlay: true });
+    }
+
+    pause = () => {
+        clearInterval(this.interval);
+        this.audio.pause();
+        this.setState({ isPlay: false });
+    }
+
+    nextSong = () => {
+        let { index } = this.state;
+        if (++index === MUSIC_LIST.length) {
+            // 已经是最后一首
+            index = 0;
+        }
+        this.setState({
+            index,
+            currentTime: 0,
+        }, () => {
+            this.play();
+        });
+        // 发送通知
+        const { title, album, author } = MUSIC_LIST[index];
+        this.props.addNotification({
+            icon,
+            title,
+            content: `${author} -- ${album}`,
+        });
+    }
+
+    prevSong = () => {
+        let { index } = this.state;
+        if (--index === -1) {
+            // 已经是第一首
+            index = MUSIC_LIST.length - 1;
+        }
+        this.setState({
+            index,
+            currentTime: 0,
+        }, () => {
+            this.audio.play();
+        });
+        // 发送通知
+        const { title, album, author } = MUSIC_LIST[index];
+        this.props.addNotification({
+            icon,
+            title,
+            content: `${author} -- ${album}`,
+        });
     }
 
     /**
@@ -134,20 +175,11 @@ class Music extends Component {
      * @memberof Music
      */
     handlePlay = () => {
-        const { isPlay } = this.state;
-        if (isPlay) {
-            this.audio.pause();
-            clearInterval(this.interval);
+        if (this.state.isPlay) {
+            this.pause();
         } else {
-            this.audio.play();
-            this.interval = setInterval(() => {
-                if (!this.seeking) {
-                    // 没有在拖动进度条的时候更新进度条
-                    this.setState({ currentTime: this.audio.currentTime });
-                }
-            }, 1000);
+            this.play();
         }
-        this.setState({ isPlay: !this.state.isPlay });
     }
 
     render() {
@@ -202,7 +234,10 @@ class Music extends Component {
                                     <div className="top-wrap">
                                         <div className="btn-wrap pull-left">
                                             <div className="prev-btn-wrap pull-left">
-                                                <a className="prev-btn-icon"></a>
+                                                <a
+                                                    className="prev-btn-icon"
+                                                    onClick={this.prevSong}
+                                                ></a>
                                             </div>
                                             <div className="play-btn-wrap pull-left">
                                                 <a
@@ -213,7 +248,10 @@ class Music extends Component {
                                                 ></a>
                                             </div>
                                             <div className="next-btn-wrap pull-left">
-                                                <a className="next-btn-icon"></a>
+                                                <a
+                                                    className="next-btn-icon"
+                                                    onClick={this.nextSong}
+                                                ></a>
                                             </div>
                                         </div>
                                         <div className="tools-wrap pull-left">
