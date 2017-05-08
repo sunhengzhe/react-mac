@@ -2,7 +2,7 @@
   "name": "system",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/system",
+  "homepage": "/",
   "dependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
@@ -12,12 +12,15 @@
   "devDependencies": {
     "eslint": "^3.19.0",
     "glob": "^7.1.1",
+    "qiniu": "^6.1.13",
     "react-scripts": "0.9.5"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run qiniu-clear && react-scripts build && npm run qiniu-upload",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "qiniu-clear": "node scripts/qiniu clear",
+    "qiniu-upload": "node scripts/qiniu upload"
   }
 }

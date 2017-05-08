@@ -5,6 +5,7 @@ import './music.css';
 import manifest from './manifest';
 import MUSIC_LIST from './data';
 import icon from './icon.png';
+import defaultIcon from './default-music.png';
 
 const PROGRESS_WIDTH = 248.86;
 
@@ -185,7 +186,13 @@ class Music extends Component {
     render() {
         const { DraggableArea, closeApp } = this.props;
         const { index, isPlay, currentTime } = this.state;
-        const { title, album = '未知', author = '未知', src, cover = icon } = MUSIC_LIST[index];
+        const {
+            title,
+            album = '未知',
+            author = '未知',
+            src,
+            cover = defaultIcon,
+        } = MUSIC_LIST[index];
         const curPos = this.audio ? currentTime / this.audio.duration * 100 : 0;
 
         return (
