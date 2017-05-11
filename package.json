@@ -7,7 +7,8 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.4",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "reqwest": "^2.0.5"
   },
   "devDependencies": {
     "eslint": "^3.19.0",

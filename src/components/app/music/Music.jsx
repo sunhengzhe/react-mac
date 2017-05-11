@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import wrapApp from '../wrapApp';
 import './music.css';
 import manifest from './manifest';
-import MUSIC_LIST from './data';
 import icon from './icon.png';
 import defaultIcon from './default-music.png';
 
@@ -12,6 +11,7 @@ const PROGRESS_WIDTH = 248.86;
 class Music extends Component {
 
     static propTypes = {
+        musics: PropTypes.array,
         DraggableArea: PropTypes.func.isRequired,
         closeApp: PropTypes.func.isRequired,
         addNotification: PropTypes.func.isRequired,
@@ -80,7 +80,8 @@ class Music extends Component {
 
     nextSong = () => {
         let { index } = this.state;
-        if (++index === MUSIC_LIST.length) {
+        const { musics } = this.props;
+        if (++index === musics.length) {
             // 已经是最后一首
             index = 0;
         }
@@ -91,7 +92,7 @@ class Music extends Component {
             this.play();
         });
         // 发送通知
-        const { title, album, author } = MUSIC_LIST[index];
+        const { title, album, author } = musics[index];
         this.props.addNotification({
             icon,
             title,
@@ -101,9 +102,10 @@ class Music extends Component {
 
     prevSong = () => {
         let { index } = this.state;
+        const { musics } = this.props;
         if (--index === -1) {
             // 已经是第一首
-            index = MUSIC_LIST.length - 1;
+            index = musics.length - 1;
         }
         this.setState({
             index,
@@ -112,7 +114,7 @@ class Music extends Component {
             this.audio.play();
         });
         // 发送通知
-        const { title, album, author } = MUSIC_LIST[index];
+        const { title, album, author } = musics[index];
         this.props.addNotification({
             icon,
             title,
@@ -176,6 +178,10 @@ class Music extends Component {
      * @memberof Music
      */
     handlePlay = () => {
+        if (!this.audio.src) {
+            return;
+        }
+
         if (this.state.isPlay) {
             this.pause();
         } else {
@@ -184,15 +190,15 @@ class Music extends Component {
     }
 
     render() {
-        const { DraggableArea, closeApp } = this.props;
+        const { DraggableArea, closeApp, musics } = this.props;
         const { index, isPlay, currentTime } = this.state;
         const {
-            title,
+            title = '未知',
             album = '未知',
             author = '未知',
             src,
             cover = defaultIcon,
-        } = MUSIC_LIST[index];
+        } = musics[index] || {};
         const curPos = this.audio ? currentTime / this.audio.duration * 100 : 0;
 
         return (
