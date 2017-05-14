@@ -5,7 +5,7 @@ const CLEAR_NOTIFICATION = 'CLEAR_NOTIFICATION';
 
 // reducer
 export default function notifications(state = [], action) {
-    switch(action.type) {
+    switch (action.type) {
         case ADD_NOTIFICATION:
             return [
                 ...state,
@@ -15,12 +15,10 @@ export default function notifications(state = [], action) {
                     title: action.title,
                     content: action.content,
                     onClick: action.onClick,
-                }
+                },
             ];
         case REMOVE_NOTIFICATION:
-            return state.filter(item => {
-                return item.id !== action.id;
-            });
+            return state.filter(item => item.id !== action.id);
         case CLEAR_NOTIFICATION:
             return [];
         default:
@@ -31,7 +29,7 @@ export default function notifications(state = [], action) {
 // action creators
 export const addNotification = ({
     id = +new Date(),
-    ...args,
+    ...args
 }) => ({
     type: ADD_NOTIFICATION,
     id,

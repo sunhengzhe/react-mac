@@ -6,39 +6,38 @@ import './dock.css';
 const Dock = ({
     apps,
     openApp,
-    openedApps
-}) => {
-    return (
-        <div className="dock">
-            {
-                apps.map((app) => {
-                    const style = {
-                        backgroundImage: `url(${app.icon})`
-                    };
+    openedApps,
+}) => (
+    <div className="dock">
+        {
+            apps.map((app) => {
+                const style = {
+                    backgroundImage: `url(${app.icon})`,
+                };
 
-                    let isOpened = openedApps.includes(app.appid);
+                const isOpened = openedApps.includes(app.appid);
 
-                    return (
-                        <div
-                            key={app.displayName}
-                            className={`appicon ${isOpened ? 'opened' : ''}`}
-                            style={style}
-                            onClick={() => {
-                                openApp(app.appid);
-                            }}
-                        >
-                            <i className="display-name">{ app.displayName }</i>
-                        </div>
-                    )
-                })
-            }
-        </div>
-    )
-};
+                return (
+                    <div // eslint-disable-line
+                      key={app.displayName}
+                      className={`appicon ${isOpened ? 'opened' : ''}`}
+                      style={style}
+                      onClick={() => {
+                          openApp(app.appid);
+                      }}
+                    >
+                        <i className="display-name">{ app.displayName }</i>
+                    </div>
+                );
+            })
+        }
+    </div>
+);
 
 Dock.propTypes = {
-    apps: PropTypes.array,
-    openApp: PropTypes.func,
-}
+    apps: PropTypes.arrayOf(PropTypes.any).isRequired,
+    openApp: PropTypes.func.isRequired,
+    openedApps: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default Dock;

@@ -14,9 +14,9 @@ export default wrapApp(({
             <div className="welcome">
                 <div className="header default-header">
                     <ControlBtnGroup
-                        onClose={() => {
-                            closeApp(manifest.appid);
-                        }}
+                      onClose={() => {
+                          closeApp(manifest.appid);
+                      }}
                     />
                     欢迎
                 </div>
@@ -32,16 +32,16 @@ export default wrapApp(({
                     <p>如有问题，欢迎随时和我联系</p>
                 </div>
                 <div className="footer">
-                    <a
-                        className="confirm-btn"
-                        onClick={() => {
-                            closeApp(manifest.appid);
-                        }}
+                    <a // eslint-disable-line
+                      className="confirm-btn"
+                      onClick={() => {
+                          closeApp(manifest.appid);
+                      }}
                     >知道了</a>
                 </div>
             </div>
         </DraggableArea>
-    )
+    );
 }, {
     initWidth: 360,
     initHeight: 300,

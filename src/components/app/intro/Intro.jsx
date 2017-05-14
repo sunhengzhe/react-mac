@@ -57,8 +57,7 @@ class Intro extends Component {
 
     static propTypes = {
         closeApp: PropTypes.func.isRequired,
-        removeNotification: PropTypes.func,
-        DraggableArea: PropTypes.any,
+        DraggableArea: PropTypes.func.isRequired,
     }
 
     state = {
@@ -69,7 +68,7 @@ class Intro extends Component {
         clearInterval(this.interval);
     }
 
-    onScroll = (e) => {
+    onScroll = () => {
         if (this.ele.scrollTop > MAX_SCROLL) {
             return;
         }
@@ -116,45 +115,45 @@ class Intro extends Component {
         };
         return (
             <DraggableArea
-                className="intro" onScroll={this.onScroll}
+              className="intro" onScroll={this.onScroll}
             >
                 <div
-                    className="headicon"
-                    style={headiconStyle}
-                ></div>
-                <div className="scroll-wrap" ref={(ele) => this.ele = ele}>
+                  className="headicon"
+                  style={headiconStyle}
+                />
+                <div className="scroll-wrap" ref={(ele) => (this.ele = ele)}>
                     <ControlBtnGroup
-                        onClose={() => {
-                            closeApp(manifest.appid);
-                        }}
+                      onClose={() => {
+                          closeApp(manifest.appid);
+                      }}
                     />
-                    <a
-                        className="more"
-                        onClick={this.showMore}
-                        style={{ display: this.state.scrollTop === 0 ? 'block' : 'none'}}
+                    <a // eslint-disable-line
+                      className="more"
+                      onClick={this.showMore}
+                      style={{ display: this.state.scrollTop === 0 ? 'block' : 'none' }}
                     >
-                        <i className="fa fa-angle-down" aria-hidden="true"></i>
+                        <i className="fa fa-angle-down" aria-hidden="true" />
                     </a>
                     <div
-                        className="header"
+                      className="header"
                     >
                         <div
-                            className="name"
-                            style={nameStyle}
+                          className="name"
+                          style={nameStyle}
                         >孙恒哲</div>
                         <div
-                            className="introduce"
-                            style={introduceStyle}
+                          className="introduce"
+                          style={introduceStyle}
                         >永远相信 美好的事情即将到来</div>
                         <div
-                            className="social"
-                            style={socialStyle}
+                          className="social"
+                          style={socialStyle}
                         >
-                            <a href="https://github.com/sunhengzhe" target="_blank">
-                                <i className="fa fa-github" aria-hidden="true"></i>
+                            <a href="https://github.com/sunhengzhe" target="_blank" rel="noopener noreferrer">
+                                <i className="fa fa-github" aria-hidden="true" />
                             </a>
-                            <a href="http://weibo.com/3025220401" target="_blank">
-                                <i className="fa fa-weibo" aria-hidden="true"></i>
+                            <a href="http://weibo.com/3025220401" target="_blank" rel="noopener noreferrer">
+                                <i className="fa fa-weibo" aria-hidden="true" />
                             </a>
                         </div>
                     </div>
@@ -162,9 +161,8 @@ class Intro extends Component {
                         <div className="basic">
                             <div className="item">
                                 <div
-                                    className="icon sex"
-                                >
-                                </div>
+                                  className="icon sex"
+                                />
                                 <p className="desc">性别</p>
                             </div>
                             <div className="item">
@@ -175,16 +173,14 @@ class Intro extends Component {
                             </div>
                             <div className="item">
                                 <div
-                                    className="icon dog"
-                                >
-                                </div>
+                                  className="icon dog"
+                                />
                                 <p className="desc">属狗</p>
                             </div>
                             <div className="item">
                                 <div
-                                    className="icon sagittarius"
-                                >
-                                </div>
+                                  className="icon sagittarius"
+                                />
                                 <p className="desc">射手座</p>
                             </div>
                             <div className="item">
@@ -239,7 +235,7 @@ class Intro extends Component {
                 </div>
             </DraggableArea>
         );
-    };
+    }
 }
 
 export default wrapApp(Intro, {

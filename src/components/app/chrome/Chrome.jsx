@@ -1,9 +1,7 @@
 import React from 'react';
 
-export default () => {
-    return (
-        <div>
-            Chrome
-        </div>
-    );
-};
+export default () => (
+    <div>
+        Chrome
+    </div>
+);

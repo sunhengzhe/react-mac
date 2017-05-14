@@ -8,6 +8,6 @@ const exec = (cmd, ...args) => {
             text: `zsh: command not found: ${cmd}`,
         }];
     }
-}
+};
 
 export default exec;

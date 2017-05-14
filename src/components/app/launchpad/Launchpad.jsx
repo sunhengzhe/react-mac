@@ -21,7 +21,7 @@ class Launchpad extends Component {
     static propTypes = {
         closeApp: PropTypes.func.isRequired,
         openApp: PropTypes.func.isRequired,
-        apps: PropTypes.array.isRequired,
+        apps: PropTypes.arrayOf(PropTypes.object).isRequired,
     }
 
     state = {
@@ -40,15 +40,14 @@ class Launchpad extends Component {
         const { apps, openApp } = this.props;
         const { willQuit } = this.state;
         return (
-            <div
-                className={`launchpad ${willQuit ? 'will-quit' : ''}`}
-                onClick={() => this.willQuit()}
+            <div // eslint-disable-line
+              className={`launchpad ${willQuit ? 'will-quit' : ''}`}
+              onClick={() => this.willQuit()}
             >
-                <div className="bg-wrap"></div>
+                <div className="bg-wrap" />
                 <div className="body">
                     {
                         apps.map((app, index) => {
-
                             const wrapStyle = {
                                 left: MARGIN_LEFT + (BOX_WIDTH + HORIZON_MARGIN) * (index % COL_NUM),
                                 top: MARGIN_TOP + (BOX_HEIGHT + VERTICAL_MARGIN) * parseInt(index / COL_NUM, 10),
@@ -59,25 +58,25 @@ class Launchpad extends Component {
                                 height: BOX_WIDTH,
                                 backgroundImage: `url(${app.icon})`,
                                 backgroundSize: `${BOX_WIDTH}px ${BOX_WIDTH}px`,
-                            }
+                            };
 
                             return (
-                                <div
-                                    key={app.displayName}
-                                    className="app-wrap"
-                                    style={wrapStyle}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        e.target.classList.add('will-open');
-                                        this.willQuit(() => {
-                                            openApp(app.appid);
-                                        });
-                                    }}
+                                <div // eslint-disable-line
+                                  key={app.displayName}
+                                  className="app-wrap"
+                                  style={wrapStyle}
+                                  onClick={(e) => {
+                                      e.stopPropagation();
+                                      e.target.classList.add('will-open');
+                                      this.willQuit(() => {
+                                          openApp(app.appid);
+                                      });
+                                  }}
                                 >
-                                    <div
-                                        key={app.displayName}
-                                        className="appicon"
-                                        style={iconStyle}
+                                    <div // eslint-disable-line
+                                      key={app.displayName}
+                                      className="appicon"
+                                      style={iconStyle}
                                     >
 
                                     </div>
@@ -85,12 +84,12 @@ class Launchpad extends Component {
                                         { app.displayName }
                                     </span>
                                 </div>
-                            )
+                            );
                         })
                     }
                 </div>
             </div>
-        )
+        );
     }
 }
 

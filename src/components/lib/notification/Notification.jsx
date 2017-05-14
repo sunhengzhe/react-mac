@@ -5,11 +5,15 @@ import './style.css';
 class Notification extends Component {
 
     static propTypes = {
-        icon: PropTypes.string,
-        title: PropTypes.string,
-        content: PropTypes.string,
+        icon: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
         onClick: PropTypes.func,
-        destroy: PropTypes.func,
+        destroy: PropTypes.func.isRequired,
+    }
+
+    static defaultProps = {
+        onClick: () => {},
     }
 
     state = {
@@ -39,26 +43,26 @@ class Notification extends Component {
         const { willQuit } = this.state;
         const { icon, title, content, onClick } = this.props;
         return (
-            <div
-                className={`notification ${willQuit ? 'will-quit' : ''}`}
-                onClick={() => {
-                    this.willQuit(onClick);
-                }}
+            <div // eslint-disable-line
+              className={`notification ${willQuit ? 'will-quit' : ''}`}
+              onClick={() => {
+                  this.willQuit(onClick);
+              }}
             >
                 <div className="pull-left icon-wrap">
                     <i
-                        className="icon"
-                        style={{
-                            backgroundImage: `url(${icon})`
-                        }}
-                    ></i>
+                      className="icon"
+                      style={{
+                          backgroundImage: `url(${icon})`,
+                      }}
+                    />
                 </div>
                 <div className="pull-left content-wrap">
                     <h3 className="title">{ title }</h3>
                     <p className="content">{ content }</p>
                 </div>
             </div>
-        )
+        );
     }
 }
 

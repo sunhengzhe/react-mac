@@ -7,7 +7,17 @@ class Line extends Component {
     static propTypes = {
         text: PropTypes.string,
         isCurLine: PropTypes.bool,
+        hasHead: PropTypes.bool,
         cursorPos: PropTypes.number,
+        curDir: PropTypes.string,
+    }
+
+    static defaultProps = {
+        text: '',
+        isCurLine: false,
+        cursorPos: 0,
+        hasHead: true,
+        curDir: '~',
     }
 
     constructor(...args) {
@@ -23,7 +33,7 @@ class Line extends Component {
         // 是否是当前行
         if (this.props.isCurLine !== nextProps.isCurLine) {
             this.setState({
-                isCurLine: nextProps.isCurLine
+                isCurLine: nextProps.isCurLine,
             });
         }
 
@@ -67,16 +77,19 @@ class Line extends Component {
         if (isCurLine) {
             // 如果是当前行，需要拆分
             content = [...text].map((char, index) => {
-                let isCursor = index === cursorPos;
+                const isCursor = index === cursorPos;
                 return (
-                  <span key={index} className={isCursor ? 'cursor' : ''}>{char}</span>
-                )
+                    <span
+                      key={index} // eslint-disable-line
+                      className={isCursor ? 'cursor' : ''}
+                    >{char}</span>
+                );
             });
             // 补光标位
-            let isCursor = content.length === cursorPos;
+            const isCursor = content.length === cursorPos;
             content.push(
-                <span key={content.length} className={isCursor ? 'cursor' : ''}>&nbsp;</span>
-            )
+                <span key={content.length} className={isCursor ? 'cursor' : ''}>&nbsp;</span>,
+            );
         } else {
             // 非当前行直接用文本填充
             content = text;
@@ -86,24 +99,24 @@ class Line extends Component {
     }
 
     render() {
-        const { hasHead = true, curDir = "~" } = this.props;
+        const { hasHead, curDir } = this.props;
         const content = this.getDOM();
         let head = '';
         if (hasHead) {
             head = (
-              <span>
-                <span className="headIcon">></span>
-                <span className="space"></span>
-                <span className="dir">{curDir}</span>
-                <span className="space"></span>
-              </span>
+                <span>
+                    <span className="headIcon">&gt;</span>
+                    <span className="space" />
+                    <span className="dir">{curDir}</span>
+                    <span className="space" />
+                </span>
             );
         }
         return (
-          <div className="line">
-            { head }
-            { content }
-          </div>
+            <div className="line">
+                { head }
+                { content }
+            </div>
         );
     }
 }

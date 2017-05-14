@@ -14,7 +14,7 @@ class ITerm extends Component {
 
     static propTypes = {
         closeApp: PropTypes.func.isRequired,
-        DraggableArea: PropTypes.any.isRequired
+        DraggableArea: PropTypes.func.isRequired,
     }
 
     constructor(...args) {
@@ -31,11 +31,10 @@ class ITerm extends Component {
             const { curLineIndex, lines } = this.state;
             const curLine = lines[curLineIndex];
 
-            let curText = curLine.text || '';
-            let curPos = curLine.cursorPos;
+            const curText = curLine.text || '';
+            const curPos = curLine.cursorPos;
 
             const keyCode = e.keyCode;
-            console.log(keyCode)
 
             if (keyCode === 13) {
                 // 执行命令
@@ -59,7 +58,7 @@ class ITerm extends Component {
                         return;
                     }
                     // 输入
-                    curLine.text = curText.slice(0, curPos) + e.key +  curText.slice(curPos);
+                    curLine.text = curText.slice(0, curPos) + e.key + curText.slice(curPos);
                     curLine.cursorPos += 1;
                 }
 
@@ -76,8 +75,8 @@ class ITerm extends Component {
                     lines: [
                         ...lines.splice(0, curLineIndex),
                         curLine,
-                        ...lines.splice(curLineIndex)
-                    ]
+                        ...lines.splice(curLineIndex),
+                    ],
                 });
             }
         });
@@ -87,36 +86,36 @@ class ITerm extends Component {
         this.init();
     }
 
-    init() {
-        const lastLoginTime = +localStorage.getItem('last-login-iTerm') || +new Date();
-        localStorage.setItem('last-login-iTerm', +new Date());
-
-        const welcomeLine = {
-            hasHead: false,
-            text: `Last login: ${moment(lastLoginTime).format('YYYY-MM-DD HH:mm:ss')} on ttys001`
-        };
-
-        const newLine = this.getNewLine();
-
-        this.setState({
-            lines: [ welcomeLine, newLine ],
-            curLineIndex: 1,
-        });
-    }
-
-    getNewLine(attr = {}) {
+    getNewLine = (attr = {}) => {
         const { hasHead = true, text = '', cursorPos = 0 } = attr;
         return {
             hasHead,
             text,
             cursorPos,
-        }
+        };
+    }
+
+    init = () => {
+        const lastLoginTime = +localStorage.getItem('last-login-iTerm') || +new Date();
+        localStorage.setItem('last-login-iTerm', +new Date());
+
+        const welcomeLine = {
+            hasHead: false,
+            text: `Last login: ${moment(lastLoginTime).format('YYYY-MM-DD HH:mm:ss')} on Mac`,
+        };
+
+        const newLine = this.getNewLine();
+
+        this.setState({
+            lines: [welcomeLine, newLine],
+            curLineIndex: 1,
+        });
     }
 
     exec(command) {
         const { curLineIndex, lines } = this.state;
 
-        let _command = command.trim();
+        const _command = command.trim();
 
         let resultLines = [];
 
@@ -138,18 +137,18 @@ class ITerm extends Component {
         return (
             <div className="iTerm">
                 <DraggableArea
-                    className="default-header header"
+                  className="default-header header"
                 >
                     <ControlBtnGroup
-                        onClose={() => {
-                            closeApp(manifest.appid);
-                        }}
-                        onMax={() => {
+                      onClose={() => {
+                          closeApp(manifest.appid);
+                      }}
+                      onMax={() => {
 
-                        }}
-                        onMin={() => {
+                      }}
+                      onMin={() => {
 
-                        }}
+                      }}
                     />
                 </DraggableArea>
                 <div className="body">
@@ -159,20 +158,20 @@ class ITerm extends Component {
                             const isCurLine = index === curLineIndex;
                             return (
                                 <Line
-                                key={index}
-                                isCurLine={isCurLine}
-                                hasHead={hasHead}
-                                text={text}
-                                cursorPos={cursorPos}
+                                  key={index} // eslint-disable-line
+                                  isCurLine={isCurLine}
+                                  hasHead={hasHead}
+                                  text={text}
+                                  cursorPos={cursorPos}
                                 />
-                            )
+                            );
                         })
                     }
                 </div>
             </div>
         );
     }
-};
+}
 
 export default wrapApp(ITerm, {
     initWidth: 585,

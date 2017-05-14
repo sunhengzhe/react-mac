@@ -2,7 +2,7 @@
 const ADD_APP_TO_DOCK = 'ADD_APP_TO_DOCK';
 const REMOVE_APP_FROM_DOCK = 'REMOVE_APP_FROM_DOCK';
 
-//reducer
+// reducer
 export default (state = [], action) => {
     switch (action.type) {
         case ADD_APP_TO_DOCK:
@@ -17,7 +17,7 @@ export default (state = [], action) => {
         default:
             return state;
     }
-}
+};
 
 // action creators
 export const addAppToDock = (appid) => ({

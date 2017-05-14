@@ -1,9 +1,7 @@
 import React from 'react';
 
-export default () => {
-    return (
-        <div>
-            Finder
-        </div>
-    );
-};
+export default () => (
+    <div>
+        Finder
+    </div>
+);

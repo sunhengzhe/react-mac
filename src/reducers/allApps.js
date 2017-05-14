@@ -21,7 +21,7 @@ export default (state = [], action) => {
         default:
             return state;
     }
-}
+};
 
 // action creators
 export const installApp = (appid) => ({

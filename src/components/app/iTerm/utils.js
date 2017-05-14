@@ -19,5 +19,5 @@ function isValidInput(key) {
 }
 
 export default {
-    isValidInput
+    isValidInput,
 };

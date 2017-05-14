@@ -12,6 +12,9 @@
   },
   "devDependencies": {
     "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-react": "^6.10.3",
     "glob": "^7.1.1",
     "qiniu": "^6.1.13",
     "react-scripts": "0.9.5"

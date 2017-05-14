@@ -1,5 +1,5 @@
 function wrap(results) {
-    return results.map((item, index) => {
+    return results.map((item) => {
         const { mod, createdBy, size, updatedAt, name } = item;
         return {
             hasHead: false,
@@ -28,10 +28,11 @@ function main() {
             createdBy: 'sunhengzhe',
             mod: 'drwx------+',
             updatedAt: '2017-03-21 18:02:32',
-        }
-    ]
+        },
+    ];
 
     return wrap(results);
 }
 
-module.exports =  main;
+module.exports = main;
+

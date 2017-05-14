@@ -9,9 +9,9 @@ import manifest from './manifest';
 import colors from './colors';
 
 function selectText(element) {
-    let text = element,
-        range,
-        selection;
+    const text = element;
+    let range;
+    let selection;
 
     if (document.body.createTextRange) {
         // IE
@@ -33,8 +33,8 @@ function selectText(element) {
 class ColorPicker extends Component {
 
     static propTypes = {
-        closeApp: PropTypes.func,
-        DraggableArea: PropTypes.any,
+        closeApp: PropTypes.func.isRequired,
+        DraggableArea: PropTypes.func.isRequired,
     }
 
     state = {
@@ -68,7 +68,7 @@ class ColorPicker extends Component {
             peekColor: '',
             tips: {
                 visibility: false,
-            }
+            },
         }, () => {
             clearTimeout(this.tipTimeout);
 
@@ -78,14 +78,14 @@ class ColorPicker extends Component {
                     tips: {
                         visibility: true,
                         success: true,
-                    }
+                    },
                 });
             } catch (e) {
                 this.setState({
                     tips: {
                         visibility: true,
                         success: false,
-                    }
+                    },
                 });
             }
 
@@ -93,7 +93,7 @@ class ColorPicker extends Component {
                 this.setState({
                     tips: {
                         visibility: false,
-                    }
+                    },
                 });
             }, 3000);
         });
@@ -122,18 +122,18 @@ class ColorPicker extends Component {
         return (
             <div className="color-picker">
                 <DraggableArea
-                    className="header text-center"
+                  className="header text-center"
                 >
                     <ControlBtnGroup
-                        onClose={() => {
-                            closeApp(manifest.appid);
-                        }}
-                        onMax={() => {
+                      onClose={() => {
+                          closeApp(manifest.appid);
+                      }}
+                      onMax={() => {
 
-                        }}
-                        onMin={() => {
+                      }}
+                      onMin={() => {
 
-                        }}
+                      }}
                     />
                 </DraggableArea>
                 <div className="body">
@@ -141,21 +141,21 @@ class ColorPicker extends Component {
                         {
                             tips.visibility ? (
                                 <div
-                                    className={`tips ${tips.success ? 'success' : 'fail'}`}
+                                  className={`tips ${tips.success ? 'success' : 'fail'}`}
                                 >
                                     { tips.success ? '复制成功!' : '复制失败，请使用 ctrl + c' }
                                 </div>
                             ) : ''
                         }
                         <div
-                            className="selected-color"
-                            style={{
-                                background: peekColor || selectedColor
-                            }}
-                        ></div>
+                          className="selected-color"
+                          style={{
+                              background: peekColor || selectedColor,
+                          }}
+                        />
                         <div className="text-center">
                             {
-                                peekColor ? (
+                                peekColor ? ( // eslint-disable-line
                                     <div>
                                         <span>单击以选取颜色：</span><span>{peekColor}</span>
                                     </div>
@@ -163,7 +163,7 @@ class ColorPicker extends Component {
                                     selectedColor ? (
                                         <div>
                                             <span>已选取颜色：</span>
-                                            <span ref={node => this.colorText = node}>{selectedColor}</span>
+                                            <span ref={node => (this.colorText = node)}>{selectedColor}</span>
                                         </div>
                                     ) : (
                                         <span>单击以选取颜色</span>
@@ -174,36 +174,32 @@ class ColorPicker extends Component {
                     </div>
                     <div className="content-panel">
                         {
-                            colors.map((group, index) => {
-                                return (
-                                    <div
-                                        key={index}
-                                        className="color-group"
-                                    >
-                                        {
-                                            group.map(color => {
-                                                return (
-                                                    <div
-                                                        style={{ background: color }}
-                                                        onMouseEnter={() => {this.peekColor(color)}}
-                                                        onMouseLeave={() => {this.cleartColor()}}
-                                                        onClick={() => {this.selectColor()}}
-                                                        key={color}
-                                                        className="color">
-                                                    </div>
-                                                );
-                                            })
-                                        }
-                                    </div>
-                                )
-                            })
+                            colors.map((group, index) => (
+                                <div
+                                  key={index} // eslint-disable-line
+                                  className="color-group"
+                                >
+                                    {
+                                        group.map(color => (
+                                            <div // eslint-disable-line
+                                              style={{ background: color }}
+                                              onMouseEnter={() => { this.peekColor(color); }}
+                                              onMouseLeave={() => { this.cleartColor(); }}
+                                              onClick={() => { this.selectColor(); }}
+                                              key={color}
+                                              className="color"
+                                            />
+                                        ))
+                                    }
+                                </div>
+                            ))
                         }
                     </div>
                 </div>
             </div>
         );
     }
-};
+}
 
 export default wrapApp(ColorPicker, {
     initWidth: 800,

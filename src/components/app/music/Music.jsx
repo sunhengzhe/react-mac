@@ -11,10 +11,15 @@ const PROGRESS_WIDTH = 248.86;
 class Music extends Component {
 
     static propTypes = {
-        musics: PropTypes.array,
+        musics: PropTypes.arrayOf(PropTypes.object).isRequired,
         DraggableArea: PropTypes.func.isRequired,
         closeApp: PropTypes.func.isRequired,
         addNotification: PropTypes.func.isRequired,
+    }
+
+    constructor(...args) {
+        super(...args);
+        this.seeking = false;
     }
 
     state = {
@@ -22,11 +27,6 @@ class Music extends Component {
         index: 0,
         isPlay: false,
         currentTime: 0,
-    }
-
-    constructor(...args) {
-        super(...args);
-        this.seeking = false;
     }
 
     componentDidMount() {
@@ -145,7 +145,7 @@ class Music extends Component {
             const changeRate = changeX / PROGRESS_WIDTH * 100;
             let barWidth = this.startBarWidth + changeRate;
 
-            if (barWidth < 0 ) {
+            if (barWidth < 0) {
                 barWidth = 0;
             }
 
@@ -163,7 +163,7 @@ class Music extends Component {
      * 拖动进度条结束
      * @memberof Music
      */
-    seekToTime = (e) => {
+    seekToTime = () => {
         if (this.seeking) {
             this.audio.currentTime = this.seekTime;
             this.setState({
@@ -204,106 +204,107 @@ class Music extends Component {
         return (
             <DraggableArea>
                 <div
-                    onMouseMove={this.changeProgress}
-                    onMouseUp={this.seekToTime}
-                    onMouseLeave={this.seekToTime}
+                  onMouseMove={this.changeProgress}
+                  onMouseUp={this.seekToTime}
+                  onMouseLeave={this.seekToTime}
                 >
-                    <audio ref={node => this.audio = node} src={src} />
+                    <audio ref={node => (this.audio = node)} src={src} />
                     <div className="music">
                         <div
-                            className="big-cover"
-                            style={{
-                                backgroundImage: `url(${cover})`
-                            }}
-                            onMouseLeave={this.onMouseLeaveCover}
-                            onMouseEnter={this.onMouseEnterCover}
+                          className="big-cover"
+                          style={{
+                              backgroundImage: `url(${cover})`,
+                          }}
+                          onMouseLeave={this.onMouseLeaveCover}
+                          onMouseEnter={this.onMouseEnterCover}
                         >
                             <div
-                                className="intro-panel"
-                                ref={node => {this.introPanel = node}}
+                              className="intro-panel"
+                              ref={node => (this.introPanel = node)}
                             >
-                                <a
-                                    className="close-btn"
-                                    onClick={() => {
-                                        closeApp(manifest.appid);
-                                    }}
+                                <a // eslint-disable-line
+                                  className="close-btn"
+                                  onClick={() => {
+                                      closeApp(manifest.appid);
+                                  }}
                                 ></a>
                                 <h3 className="title">{ title }</h3>
                                 <p className="sub-title">{ `${author} -- ${album}` }</p>
                             </div>
                             <div
-                                className="control-panel"
-                                ref={node => {this.controlPanel = node}}
+                              className="control-panel"
+                              ref={node => (this.controlPanel = node)}
                             >
                                 <div className="left-wrap pull-left">
                                     <i
-                                        className="small-cover"
-                                        style={{
-                                            backgroundImage: `url(${cover})`
-                                        }}
-                                    ></i>
+                                      className="small-cover"
+                                      style={{
+                                          backgroundImage: `url(${cover})`,
+                                      }}
+                                    />
                                 </div>
                                 <div className="right-wrap pull-left">
                                     <div className="top-wrap">
                                         <div className="btn-wrap pull-left">
                                             <div className="prev-btn-wrap pull-left">
-                                                <a
-                                                    className="prev-btn-icon"
-                                                    onClick={this.prevSong}
+                                                <a //eslint-disable-line
+                                                  className="prev-btn-icon"
+                                                  onClick={this.prevSong}
                                                 ></a>
                                             </div>
                                             <div className="play-btn-wrap pull-left">
-                                                <a
-                                                    className={
-                                                        `play-btn-icon ${isPlay ? 'pause' : ''}`
-                                                    }
-                                                    onClick={this.handlePlay}
+                                                <a //eslint-disable-line
+                                                  className={
+                                                      `play-btn-icon ${isPlay ? 'pause' : ''}`
+                                                  }
+                                                  onClick={this.handlePlay}
                                                 ></a>
                                             </div>
                                             <div className="next-btn-wrap pull-left">
-                                                <a
-                                                    className="next-btn-icon"
-                                                    onClick={this.nextSong}
+                                                <a //eslint-disable-line
+                                                  className="next-btn-icon"
+                                                  onClick={this.nextSong}
                                                 ></a>
                                             </div>
                                         </div>
                                         <div className="tools-wrap pull-left">
                                             <a className="like-btn">
-                                                <i className="fa fa-heart" aria-hidden="true"></i>
+                                                <i className="fa fa-heart" aria-hidden="true" />
                                             </a>
                                             <a className="lyric-btn">
-                                                <i className="lyric-icon"></i>
+                                                <i className="lyric-icon" />
                                             </a>
                                             <a className="voice-btn">
-                                                <i className="fa fa-volume-up" aria-hidden="true"></i>
+                                                <i className="fa fa-volume-up" aria-hidden="true" />
                                             </a>
                                             <a className="list-btn">
-                                                <i className="fa fa-list-ul" aria-hidden="true"></i>
+                                                <i className="fa fa-list-ul" aria-hidden="true" />
                                             </a>
                                         </div>
                                     </div>
                                     <div className="progress-wrap">
                                         <div className="progress-bar">
-                                            <div
-                                                className="played-progress"
-                                                ref={node => this.progressBar = node}
-                                                style={{
-                                                    width: `${curPos}%`
-                                                }}
+                                            <div // eslint-disable-line
+                                              className="played-progress"
+                                              ref={node => (this.progressBar = node)}
+                                              style={{
+                                                  width: `${curPos}%`,
+                                              }}
                                             ></div>
-                                            <i className="progress-btn"
-                                                ref={node => this.progressBtn = node}
-                                                style={{
-                                                    left: `${curPos}%`
-                                                }}
-                                                onMouseDown={this.startSeek}
-                                            ></i>
+                                            <i
+                                              className="progress-btn"
+                                              ref={node => (this.progressBtn = node)}
+                                              style={{
+                                                  left: `${curPos}%`,
+                                              }}
+                                              onMouseDown={this.startSeek}
+                                            />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="play-list"></div>
+                        <div className="play-list" />
                     </div>
                 </div>
             </DraggableArea>

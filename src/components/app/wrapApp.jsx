@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import './app.css';
 
 export default (
     WrappedComponent,
-    options = {}
+    options = {},
 ) => {
-
     class App extends Component {
-
-        static propTypes = {
-            closeApp: PropTypes.func.isRequired,
-            addNotification: PropTypes.func,
-        };
 
         constructor(...args) {
             super(...args);
@@ -20,25 +13,27 @@ export default (
             this.moveLock = true;
             this.pos = {
                 x: initWidth ? (window.innerWidth - initWidth) / 2 : 300,
-                y: initHeight ? (window.innerHeight - initHeight) / 2 : 100
+                y: initHeight ? (window.innerHeight - initHeight) / 2 : 100,
             };
 
             // 可拖拽区域
             this.DraggableArea = (props) => (
                 <div
-                    {...props}
-                    onMouseDown={this.onDraggableAreaMouseDown}
-                    onMouseUp={this.onDraggableAreaMouseUp}
-                    onMouseLeave={this.onDraggableAreaMouseUp}
-                    onMouseMove={this.onDraggableAreaMouseMove}
+                  {...props}
+                  onMouseDown={this.onDraggableAreaMouseDown}
+                  onMouseUp={this.onDraggableAreaMouseUp}
+                  onMouseLeave={this.onDraggableAreaMouseUp}
+                  onMouseMove={this.onDraggableAreaMouseMove}
                 >
-                    { props.children }
+                    {
+                        props.children // eslint-disable-line
+                    }
                 </div>
             );
         }
 
         onAppMouseDown = () => {
-            this.ele.style.zIndex = +((+new Date() + '').slice(5, -3));
+            this.ele.style.zIndex = +(`${+new Date()}`.slice(5, -3));
         }
 
         /**
@@ -56,7 +51,7 @@ export default (
          * 鼠标抬起
          * @memberof App
          */
-        onDraggableAreaMouseUp = (e) => {
+        onDraggableAreaMouseUp = () => {
             this.moveLock = true;
         }
 
@@ -81,8 +76,8 @@ export default (
                     this.pos.y = 40;
                 }
 
-                this.ele.style.top = this.pos.y + 'px';
-                this.ele.style.left = this.pos.x + 'px';
+                this.ele.style.top = `${this.pos.y}px`;
+                this.ele.style.left = `${this.pos.x}px`;
 
                 this.lastX = clientX;
                 this.lastY = clientY;
@@ -93,18 +88,18 @@ export default (
         render() {
             return (
                 <div
-                    ref={(ele) => this.ele = ele}
-                    className="app"
-                    style={{
-                        top: this.pos.y,
-                        left: this.pos.x,
-                        zIndex: +((+new Date() + '').slice(5, -3))
-                    }}
-                    onMouseDown={this.onAppMouseDown}
+                  ref={(ele) => (this.ele = ele)}
+                  className="app"
+                  style={{
+                      top: this.pos.y,
+                      left: this.pos.x,
+                      zIndex: +(`${+new Date()}`.slice(5, -3)),
+                  }}
+                  onMouseDown={this.onAppMouseDown}
                 >
                     <WrappedComponent
-                        { ...this.props }
-                        DraggableArea={this.DraggableArea}
+                      {...this.props}
+                      DraggableArea={this.DraggableArea}
                     />
                 </div>
             );
@@ -112,4 +107,4 @@ export default (
     }
 
     return App;
-}
+};
