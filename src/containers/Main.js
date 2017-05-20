@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { connect } from 'react-redux';
@@ -9,48 +9,86 @@ import Notification from '../components/lib/notification/Notification';
 import Dock from './dock/Dock';
 import { openApp } from '../reducers/openedApps';
 import { addNotification, removeNotification as removeNotificationCreator, clearNotification } from '../reducers/notifications';
+import { throttle } from '../utils';
 
-const Main = ({
-    notifications,
-    removeNotification,
-    launchpad,
-    screens,
-}) => (
-    <div className={`App ${screens.curIndex > 0 ? 'other-screen' : ''}`}>
-        <CSSTransitionGroup
-          transitionName="component"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}
-        >
-            <Menu />
-            <Dock />
-            <Desktop />
-            {
-                notifications.map((nProps) => (
-                    <Notification
-                      key={nProps.id}
-                      destroy={() => {
-                          removeNotification(nProps.id);
-                      }}
-                      {...nProps}
-                    />
-                ))
-            }
-            {
-                launchpad.show ? (
-                    <Launchpad />
-                ) : ''
-            }
-        </CSSTransitionGroup>
-    </div>
-);
+class Main extends Component {
 
-Main.propTypes = {
-    notifications: PropTypes.arrayOf(PropTypes.object).isRequired,
-    removeNotification: PropTypes.func.isRequired,
-    launchpad: PropTypes.shape().isRequired,
-    screens: PropTypes.shape().isRequired,
-};
+    static propTypes = {
+        notifications: PropTypes.arrayOf(PropTypes.object).isRequired,
+        removeNotification: PropTypes.func.isRequired,
+        launchpad: PropTypes.shape().isRequired,
+        screens: PropTypes.shape().isRequired,
+    }
+
+    state = {
+        showMenu: false,
+        showDock: false,
+    }
+
+    componentDidMount() {
+        let showMenu = false;
+        let showDock = false;
+        document.addEventListener('mousemove', throttle((e) => {
+            const { screens } = this.props;
+            const { clientX, clientY } = e;
+            if (screens.curIndex > 0) {
+                if (clientX < 80) {
+                    showDock = true;
+                } else if (clientY < 40) {
+                    showMenu = true;
+                } else {
+                    showMenu = false;
+                    showDock = false;
+                }
+                this.setState({ showDock, showMenu });
+            }
+        }, 500, 1000));
+    }
+
+    render() {
+        const { screens, notifications, removeNotification, launchpad } = this.props;
+        const { showMenu, showDock } = this.state;
+        return (
+            <div
+              className={
+                `App ${
+                    screens.curIndex > 0 ? 'other-screen' : ''
+                } ${
+                    showMenu ? 'show-menu' : ''
+                } ${
+                    showDock ? 'show-dock' : ''
+                }`
+              }
+            >
+                <CSSTransitionGroup
+                  transitionName="component"
+                  transitionEnterTimeout={500}
+                  transitionLeaveTimeout={500}
+                >
+                    <Menu />
+                    <Dock />
+                    <Desktop />
+                    {
+                        notifications.map((nProps) => (
+                            <Notification
+                              key={nProps.id}
+                              destroy={() => {
+                                  removeNotification(nProps.id);
+                              }}
+                              {...nProps}
+                            />
+                        ))
+                    }
+                    {
+                        launchpad.show ? (
+                            <Launchpad />
+                        ) : ''
+                    }
+                </CSSTransitionGroup>
+            </div>
+        );
+    }
+}
 
 const mapStateToProps = (state) => ({
     openedApps: state.openedApps,

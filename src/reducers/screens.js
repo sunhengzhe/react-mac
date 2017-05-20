@@ -3,6 +3,7 @@ const ADD_SCREEN = 'ADD_SCREEN';
 const REMOVE_SCREEN = 'REMOVE_SCREEN';
 const GO_PREV_SCREEN = 'GO_PREV_SCREEN';
 const GO_NEXT_SCREEN = 'GO_NEXT_SCREEN';
+const CHANGE_SCREEN = 'CHANGE_SCREEN';
 
 // reducer
 export default function screens(state = {
@@ -36,6 +37,11 @@ export default function screens(state = {
                 ...state,
                 curIndex: state.curIndex < state.apps.length ? state.curIndex + 1 : state.apps.length,
             };
+        case CHANGE_SCREEN:
+            return {
+                ...state,
+                curIndex: action.index,
+            };
         default:
             return state;
     }
@@ -58,4 +64,9 @@ export const goPrevScreen = () => ({
 
 export const goNextScreen = () => ({
     type: GO_NEXT_SCREEN,
+});
+
+export const changeScreen = (index) => ({
+    type: CHANGE_SCREEN,
+    index,
 });

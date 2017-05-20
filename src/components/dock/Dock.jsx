@@ -9,6 +9,7 @@ const Dock = ({
     openedApps,
     hideLaunchpad,
     toggleLaunchpad,
+    changeScreen,
 }) => (
     <div className="dock">
         {
@@ -29,6 +30,7 @@ const Dock = ({
                               // 如果是 launchpad
                               toggleLaunchpad();
                           } else {
+                              changeScreen(0);
                               hideLaunchpad();
                               openApp(app.appid);
                           }
@@ -48,6 +50,7 @@ Dock.propTypes = {
     openedApps: PropTypes.arrayOf(PropTypes.string).isRequired,
     hideLaunchpad: PropTypes.func.isRequired,
     toggleLaunchpad: PropTypes.func.isRequired,
+    changeScreen: PropTypes.func.isRequired,
 };
 
 export default Dock;

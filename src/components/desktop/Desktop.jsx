@@ -20,7 +20,6 @@ class Desktop extends Component {
         addScreen: PropTypes.func.isRequired,
         goPrevScreen: PropTypes.func.isRequired,
         goNextScreen: PropTypes.func.isRequired,
-
     }
 
     componentDidMount() {
@@ -39,7 +38,7 @@ class Desktop extends Component {
 
         /** 新功能提示 */
         const hasCheckedUpdate = !!localStorage.getItem('checked-update-info');
-        if (hasCheckedUpdate) {
+        if (!hasCheckedUpdate) {
             addNotification({
                 icon: appIcon,
                 title: '新版本更新',

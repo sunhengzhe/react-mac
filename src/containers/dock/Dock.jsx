@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
+import Dock from '../../components/dock/Dock';
 import { openApp } from '../../reducers/openedApps';
 import { toggleLaunchpad, hideLaunchpad } from '../../reducers/launchpad';
-import Dock from '../../components/dock/Dock';
+import { changeScreen } from '../../reducers/screens';
 
 const mapStateToProps = (state) => ({
     apps: state.dockApps,
@@ -17,6 +18,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     toggleLaunchpad: () => {
         dispatch(toggleLaunchpad());
+    },
+    changeScreen: (index) => {
+        dispatch(changeScreen(index));
     },
 });
 

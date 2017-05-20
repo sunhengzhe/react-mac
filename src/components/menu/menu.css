@@ -16,6 +16,10 @@
     top: -25px;
 }
 
+.show-menu .menu {
+    top: 0;
+}
+
 .menu .submenu:nth-child(2) .menu-btn {
     font-weight: bold;
 }

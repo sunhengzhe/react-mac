@@ -21,10 +21,13 @@ class Launchpad extends Component {
         openApp: PropTypes.func.isRequired,
         apps: PropTypes.arrayOf(PropTypes.object).isRequired,
         hideLaunchpad: PropTypes.func.isRequired,
+        changeScreen: PropTypes.func.isRequired,
     }
 
     willQuit = (callback) => {
-        this.props.hideLaunchpad();
+        const { changeScreen, hideLaunchpad } = this.props;
+        changeScreen(0);
+        hideLaunchpad();
         callback && callback();
     }
 

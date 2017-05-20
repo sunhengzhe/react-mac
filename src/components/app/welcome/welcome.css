@@ -14,12 +14,13 @@
 }
 
 .welcome .body {
-    height: 180px;
+    height: 200px;
     padding: 10px;
     background: #fafafa;
     line-height: 1.4;
     color: gray;
     font-size: 12px;
+    overflow-y: scroll;
 }
 
 .welcome .body .title {
@@ -32,6 +33,10 @@
 }
 
 .welcome .body li {
+    margin-bottom: 5px;
+}
+
+.welcome .body p {
     margin-bottom: 5px;
 }
 

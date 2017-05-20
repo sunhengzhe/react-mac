@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Launchpad from '../../components/launchpad/Launchpad';
 import { openApp } from '../../reducers/openedApps';
 import { showLaunchpad, hideLaunchpad } from '../../reducers/launchpad';
-
+import { changeScreen } from '../../reducers/screens';
 
 const mapStateToProps = (state) => ({
     apps: state.allApps,
@@ -17,6 +17,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     hideLaunchpad: () => {
         dispatch(hideLaunchpad());
+    },
+    changeScreen: (index) => {
+        dispatch(changeScreen(index));
     },
 });
 
