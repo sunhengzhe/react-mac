@@ -1,26 +1,26 @@
 import { connect } from 'react-redux';
+import Launchpad from '../../components/launchpad/Launchpad';
 import { openApp } from '../../reducers/openedApps';
-import { toggleLaunchpad, hideLaunchpad } from '../../reducers/launchpad';
-import Dock from '../../components/dock/Dock';
+import { showLaunchpad, hideLaunchpad } from '../../reducers/launchpad';
+
 
 const mapStateToProps = (state) => ({
-    apps: state.dockApps,
-    openedApps: state.openedApps,
+    apps: state.allApps,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     openApp: (appid) => {
         dispatch(openApp(appid));
     },
+    showLaunchpad: () => {
+        dispatch(showLaunchpad());
+    },
     hideLaunchpad: () => {
         dispatch(hideLaunchpad());
-    },
-    toggleLaunchpad: () => {
-        dispatch(toggleLaunchpad());
     },
 });
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(Dock);
+)(Launchpad);

@@ -48,3 +48,19 @@ export function moment(timestamp = +new Date()) {
         ),
     };
 }
+
+export const fullScreen = (element) => {
+    if (element.requestFullscreen) {
+        // W3C
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+        // Firefox (works in nightly)
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullScreen) {
+        // Webkit (works in Safari and Chrome)
+        element.webkitRequestFullScreen();
+    } else if (element.requestFullScreen) {
+        // mozilla草案
+        element.requestFullScreen();
+    }
+};

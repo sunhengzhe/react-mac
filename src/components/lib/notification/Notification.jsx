@@ -16,10 +16,6 @@ class Notification extends Component {
         onClick: () => {},
     }
 
-    state = {
-        willQuit: false,
-    }
-
     componentDidMount() {
         this.quitTimeout = setTimeout(() => {
             this.willQuit();
@@ -28,23 +24,18 @@ class Notification extends Component {
 
     componentWillUnmount() {
         clearTimeout(this.quitTimeout);
-        clearTimeout(this.animTimeout);
     }
 
     willQuit(callback) {
         callback && callback();
-        this.setState({ willQuit: true });
-        this.animTimeout = setTimeout(() => {
-            this.props.destroy();
-        }, 500);
+        this.props.destroy();
     }
 
     render() {
-        const { willQuit } = this.state;
         const { icon, title, content, onClick } = this.props;
         return (
             <div // eslint-disable-line
-              className={`notification ${willQuit ? 'will-quit' : ''}`}
+              className="notification"
               onClick={() => {
                   this.willQuit(onClick);
               }}

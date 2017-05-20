@@ -9,6 +9,7 @@
     border-bottom-right-radius: 6px;
     box-shadow: 0 0 .5em rgba(0, 0, 0, .2);
     z-index: 99998;
+    transition: .5s;
 }
 
 .dock::before {
@@ -20,6 +21,10 @@
     background: #c0edff;
     opacity: .8;
     z-index: -1;
+}
+
+.other-screen .dock {
+    left: -65px;
 }
 
 .appicon {

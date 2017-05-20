@@ -15,6 +15,7 @@ class ITerm extends Component {
     static propTypes = {
         closeApp: PropTypes.func.isRequired,
         DraggableArea: PropTypes.func.isRequired,
+        fullScreen: PropTypes.func.isRequired,
     }
 
     constructor(...args) {
@@ -132,7 +133,7 @@ class ITerm extends Component {
     }
 
     render() {
-        const { DraggableArea, closeApp } = this.props;
+        const { DraggableArea, closeApp, fullScreen } = this.props;
         const { lines, curLineIndex } = this.state;
         return (
             <div className="iTerm">
@@ -143,12 +144,8 @@ class ITerm extends Component {
                       onClose={() => {
                           closeApp(manifest.appid);
                       }}
-                      onMax={() => {
-
-                      }}
-                      onMin={() => {
-
-                      }}
+                      onMax={fullScreen}
+                      onMin="disabled"
                     />
                 </DraggableArea>
                 <div className="body">
@@ -174,6 +171,7 @@ class ITerm extends Component {
 }
 
 export default wrapApp(ITerm, {
+    appid: manifest.appid,
     initWidth: 585,
     initHeight: 440,
 });

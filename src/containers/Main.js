@@ -1,86 +1,67 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { connect } from 'react-redux';
 import Menu from '../components/menu/Menu';
+import Desktop from '../containers/desktop/Desktop';
+import Launchpad from '../containers/launchpad/Launchpad';
 import Notification from '../components/lib/notification/Notification';
 import Dock from './dock/Dock';
-import { openApp, closeApp } from '../reducers/openedApps';
+import { openApp } from '../reducers/openedApps';
 import { addNotification, removeNotification as removeNotificationCreator, clearNotification } from '../reducers/notifications';
-import appstoreIcon from '../images/appstore.png';
-import welcome from '../components/app/welcome/manifest';
 
-class Main extends Component {
+const Main = ({
+    notifications,
+    removeNotification,
+    launchpad,
+    screens,
+}) => (
+    <div className={`App ${screens.curIndex > 0 ? 'other-screen' : ''}`}>
+        <CSSTransitionGroup
+          transitionName="component"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}
+        >
+            <Menu />
+            <Dock />
+            <Desktop />
+            {
+                notifications.map((nProps) => (
+                    <Notification
+                      key={nProps.id}
+                      destroy={() => {
+                          removeNotification(nProps.id);
+                      }}
+                      {...nProps}
+                    />
+                ))
+            }
+            {
+                launchpad.show ? (
+                    <Launchpad />
+                ) : ''
+            }
+        </CSSTransitionGroup>
+    </div>
+);
 
-    static propTypes = {
-        openedApps: PropTypes.arrayOf(PropTypes.string).isRequired,
-        notifications: PropTypes.arrayOf(PropTypes.object).isRequired,
-        openApp: PropTypes.func.isRequired,
-        addNotification: PropTypes.func.isRequired,
-        removeNotification: PropTypes.func.isRequired,
-    }
-
-    componentWillMount() {
-        const hasCheckedUpdate = !!localStorage.getItem('checked-update-info');
-        if (hasCheckedUpdate) {
-            this.props.addNotification({
-                icon: appstoreIcon,
-                title: '新版本更新',
-                content: '添加了若干新的功能，点击查看',
-                onClick: () => {
-                    this.props.openApp(welcome.appid);
-                },
-            });
-        }
-    }
-
-    render() {
-        const {
-            openedApps,
-            notifications,
-            removeNotification,
-        } = this.props;
-        return (
-            <div className="App">
-                <Menu />
-                <Dock />
-                {
-                    openedApps.map((appid) => {
-                        const App = require(`../${appid}`).default;
-                        return (
-                            <App
-                              key={appid}
-                              {...this.props}
-                            />
-                        );
-                    })
-                }
-                {
-                    notifications.map((nProps) => (
-                        <Notification
-                          key={nProps.id}
-                          destroy={() => {
-                              removeNotification(nProps.id);
-                          }}
-                          {...nProps}
-                        />
-                    ))
-                }
-            </div>
-        );
-    }
-}
+Main.propTypes = {
+    notifications: PropTypes.arrayOf(PropTypes.object).isRequired,
+    removeNotification: PropTypes.func.isRequired,
+    launchpad: PropTypes.shape().isRequired,
+    screens: PropTypes.shape().isRequired,
+};
 
 const mapStateToProps = (state) => ({
     openedApps: state.openedApps,
     notifications: state.notifications,
+    launchpad: state.launchpad,
+    screens: state.screens,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     openApp: (appid) => {
         dispatch(openApp(appid));
-    },
-    closeApp: (appid) => {
-        dispatch(closeApp(appid));
     },
     addNotification: (...args) => {
         dispatch(clearNotification());

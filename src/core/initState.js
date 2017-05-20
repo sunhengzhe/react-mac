@@ -1,6 +1,6 @@
 /* apps */
 import Finder from '../components/app/finder/manifest';
-import Launchpad from '../components/app/launchpad/manifest';
+import Launchpad from '../components/launchpad/manifest';
 import Chrome from '../components/app/chrome/manifest';
 import ITerm from '../components/app/iTerm/manifest';
 import Music from '../components/app/music/manifest';

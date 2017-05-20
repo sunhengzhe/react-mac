@@ -16,16 +16,16 @@
     border-radius: 50%;
 }
 
+.control-btn-wrap:hover .btn::before,
+.control-btn-wrap:hover .btn::after {
+    display: block;
+}
+
 .control-btn-wrap .btn::before,
 .control-btn-wrap .btn::after {
     display: none;
     content: '';
     position: absolute;
-}
-
-.control-btn-wrap .btn:hover::before,
-.control-btn-wrap .btn:hover::after {
-    display: block;
 }
 
 /* 关闭按钮 */
@@ -65,6 +65,14 @@
     background: #000;
 }
 
+.control-btn-wrap .min-btn.disabled {
+    background: #d0d0d0;
+}
+
+.control-btn-wrap .min-btn.disabled::before {
+    display: none;
+}
+
 /* 放大按钮 */
 .control-btn-wrap .max-btn {
     left: 38px;
@@ -92,4 +100,3 @@
     border-top-color: transparent;
     border-right-color: transparent;
 }
-

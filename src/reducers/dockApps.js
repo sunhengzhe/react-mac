@@ -12,7 +12,7 @@ export default (state = [], action) => {
             ];
         case REMOVE_APP_FROM_DOCK:
             return [
-                ...state.filter(appid => appid !== action.appid)
+                ...state.filter(appid => appid !== action.appid),
             ];
         default:
             return state;

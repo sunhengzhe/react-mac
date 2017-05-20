@@ -16,7 +16,7 @@ export default (state = [], action) => {
             ];
         case CLOSE_APP:
             return [
-                ...state.filter(appid => appid !== action.appid)
+                ...state.filter(appid => appid !== action.appid),
             ];
         default:
             return state;

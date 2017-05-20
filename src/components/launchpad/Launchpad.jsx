@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import './launchpad.css';
-import manifest from './manifest';
 
 const MARGIN_TOP = 70;
 const MARGIN_RIGHT = 120;
@@ -19,29 +18,22 @@ const BOX_HEIGHT = ($windowHeight - MARGIN_TOP - MARGIN_BOTTOM - (ROW_NUM - 1) *
 
 class Launchpad extends Component {
     static propTypes = {
-        closeApp: PropTypes.func.isRequired,
         openApp: PropTypes.func.isRequired,
         apps: PropTypes.arrayOf(PropTypes.object).isRequired,
-    }
-
-    state = {
-        willQuit: false,
+        hideLaunchpad: PropTypes.func.isRequired,
     }
 
     willQuit = (callback) => {
-        this.setState({ willQuit: true });
-        setTimeout(() => {
-            this.props.closeApp(manifest.appid);
-            callback && callback();
-        }, 300);
+        this.props.hideLaunchpad();
+        callback && callback();
     }
 
     render() {
         const { apps, openApp } = this.props;
-        const { willQuit } = this.state;
         return (
             <div // eslint-disable-line
-              className={`launchpad ${willQuit ? 'will-quit' : ''}`}
+              ref={ele => (this.ele = ele)}
+              className="launchpad"
               onClick={() => this.willQuit()}
             >
                 <div className="bg-wrap" />

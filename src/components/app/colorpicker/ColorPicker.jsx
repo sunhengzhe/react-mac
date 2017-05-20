@@ -128,12 +128,6 @@ class ColorPicker extends Component {
                       onClose={() => {
                           closeApp(manifest.appid);
                       }}
-                      onMax={() => {
-
-                      }}
-                      onMin={() => {
-
-                      }}
                     />
                 </DraggableArea>
                 <div className="body">

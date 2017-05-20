@@ -20,8 +20,8 @@ const ControlBtnGroup = ({
         {
             onMin ? (
                 <a // eslint-disable-line
-                  className="btn min-btn"
-                  onClick={onMin}
+                  className={`btn min-btn ${onMin === 'disabled' ? 'disabled' : ''}`}
+                  onClick={onMin === 'disabled' ? undefined : onMin}
                 ></a>
             ) : ''
         }
@@ -38,7 +38,7 @@ const ControlBtnGroup = ({
 
 ControlBtnGroup.propTypes = {
     onClose: PropTypes.func,
-    onMin: PropTypes.func,
+    onMin: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
     onMax: PropTypes.func,
 };
 

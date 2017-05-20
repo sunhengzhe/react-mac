@@ -7,6 +7,8 @@ const Dock = ({
     apps,
     openApp,
     openedApps,
+    hideLaunchpad,
+    toggleLaunchpad,
 }) => (
     <div className="dock">
         {
@@ -23,7 +25,13 @@ const Dock = ({
                       className={`appicon ${isOpened ? 'opened' : ''}`}
                       style={style}
                       onClick={() => {
-                          openApp(app.appid);
+                          if (app.displayName === 'Launchpad') {
+                              // 如果是 launchpad
+                              toggleLaunchpad();
+                          } else {
+                              hideLaunchpad();
+                              openApp(app.appid);
+                          }
                       }}
                     >
                         <i className="display-name">{ app.displayName }</i>
@@ -38,6 +46,8 @@ Dock.propTypes = {
     apps: PropTypes.arrayOf(PropTypes.any).isRequired,
     openApp: PropTypes.func.isRequired,
     openedApps: PropTypes.arrayOf(PropTypes.string).isRequired,
+    hideLaunchpad: PropTypes.func.isRequired,
+    toggleLaunchpad: PropTypes.func.isRequired,
 };
 
 export default Dock;

@@ -6,13 +6,26 @@
     border-radius: 5px;
     background: linear-gradient(135deg, #ececec, #e1e4e4);
     box-shadow: 0 0 10px rgba(0, 0, 0, .3);
-    animation: notification-in .5s ease-out;
     z-index: 99999;
     cursor: default;
+    transition: .5s ease-out;
 }
 
-.notification.will-quit {
-    animation: notification-out .5s ease-in forwards;
+.notification.component-enter {
+    transform: translate(365px, 0);
+}
+
+.notification.component-enter.component-enter-active {
+    transform: translate(0, 0);
+}
+
+.notification.component-leave {
+    transition: .5s ease-in;
+}
+
+.notification.component-leave.component-leave-active {
+    transform: translate(365px, 0);
+    opacity: 0;
 }
 
 .notification .icon-wrap {
@@ -47,25 +60,4 @@
     font-size: 12px;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-@keyframes notification-in {
-    from {
-        transform: translate(365px, 0);
-    }
-    to {
-        transform: translate(0, 0);
-    }
-}
-
-@keyframes notification-out {
-    from {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    to {
-
-        transform: translate(365px, 0);
-        opacity: 0;
-    }
 }

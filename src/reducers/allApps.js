@@ -16,7 +16,7 @@ export default (state = [], action) => {
             ];
         case UNINSTALL_APP:
             return [
-                ...state.filter(appid => appid !== action.appid)
+                ...state.filter(appid => appid !== action.appid),
             ];
         default:
             return state;

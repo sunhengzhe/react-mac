@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { closeApp } from '../../reducers/openedApps';
+import { addNotification, removeNotification, clearNotification } from '../../reducers/notifications';
 import './app.css';
 
 export default (
@@ -6,6 +10,10 @@ export default (
     options = {},
 ) => {
     class App extends Component {
+
+        static propTypes = {
+            fullScreen: PropTypes.func.isRequired,
+        }
 
         constructor(...args) {
             super(...args);
@@ -30,6 +38,11 @@ export default (
                     }
                 </div>
             );
+        }
+
+        state = {
+            // 全屏模式
+            fullScreen: false,
         }
 
         onAppMouseDown = () => {
@@ -85,12 +98,26 @@ export default (
             }
         }
 
+        fullScreen = () => {
+            const screenNum = this.props.fullScreen(options.appid);
+            this.setState({
+                fullScreen: true,
+                // 屏幕索引
+                screenIndex: screenNum,
+            });
+        }
+
         render() {
+            const { fullScreen, screenIndex } = this.state;
             return (
                 <div
                   ref={(ele) => (this.ele = ele)}
-                  className="app"
-                  style={{
+                  className={`app ${fullScreen ? 'full-screen' : ''}`}
+                  style={fullScreen ? {
+                      transform: `translateX(${screenIndex * 100}%)`,
+                      MozTransform: `translateX(${screenIndex * 100}%)`,
+                      WebkitTransform: `translateX(${screenIndex * 100}%)`,
+                  } : {
                       top: this.pos.y,
                       left: this.pos.x,
                       zIndex: +(`${+new Date()}`.slice(5, -3)),
@@ -100,11 +127,28 @@ export default (
                     <WrappedComponent
                       {...this.props}
                       DraggableArea={this.DraggableArea}
+                      fullScreen={this.fullScreen}
                     />
                 </div>
             );
         }
     }
 
-    return App;
+    const mapDispatchToProps = (dispatch) => ({
+        closeApp: (appid) => {
+            dispatch(closeApp(appid));
+        },
+        addNotification: (...args) => {
+            dispatch(clearNotification());
+            dispatch(addNotification(...args));
+        },
+        removeNotification: (id) => {
+            dispatch(removeNotification(id));
+        },
+    });
+
+    return connect(
+        null,
+        mapDispatchToProps,
+    )(App);
 };

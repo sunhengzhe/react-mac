@@ -2,17 +2,26 @@
     position: absolute;
     left: 0; top: 0; right: 0; bottom: 0;
     z-index: 99997;
-    animation: fadeIn .3s ease-in-out;
 }
 
-.launchpad.will-quit {
-    animation: fadeOut .3s ease-in-out forwards;
+.launchpad.component-enter {
+    opacity: 0;
+}
+
+.launchpad.component-enter.component-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in-out;
+}
+
+.launchpad.component-leave.component-leave-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
 }
 
 .launchpad .bg-wrap {
     position: absolute;
     left: 0; top: 0; right: 0; bottom: 0;
-    background: url('../../../images/sky.jpg');
+    background: url('../../images/sky.jpg');
     background-size: cover;
     filter: blur(20px);
     margin: -30px;

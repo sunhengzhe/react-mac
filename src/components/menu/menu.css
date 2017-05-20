@@ -8,6 +8,12 @@
     height: 20px;
     padding: 0 10px;
     box-shadow: 0 0 1.5em rgba(0, 0, 0, .3);
+    transition: .5s;
+    z-index: 999;
+}
+
+.other-screen .menu {
+    top: -25px;
 }
 
 .menu .submenu:nth-child(2) .menu-btn {

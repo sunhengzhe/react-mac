@@ -16,3 +16,5 @@ yarn-error.log*
 # scripts
 /scripts
 
+# build
+/build
