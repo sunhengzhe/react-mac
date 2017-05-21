@@ -189,6 +189,38 @@ class Music extends Component {
         }
     }
 
+    handleLike = () => {
+        this.props.addNotification({
+            icon,
+            title: '我也喜欢这首歌！',
+            content: '喜欢就直接去网易云音乐上搜索吧！',
+        });
+    }
+
+    toggleLyric = () => {
+        this.props.addNotification({
+            icon,
+            title: '没有歌词喔',
+            content: '很明显这是首纯音乐',
+        });
+    }
+
+    handleVoice = () => {
+        this.props.addNotification({
+            icon,
+            title: '是不是傻',
+            content: '为什么不调你电脑的音量',
+        });
+    }
+
+    togglePlayList = () => {
+        this.props.addNotification({
+            icon,
+            title: '看不了播放列表！',
+            content: '反正就这么几首歌你辛苦切一下吧...',
+        });
+    }
+
     render() {
         const { DraggableArea, closeApp, musics } = this.props;
         const { index, isPlay, currentTime } = this.state;
@@ -268,16 +300,28 @@ class Music extends Component {
                                             </div>
                                         </div>
                                         <div className="tools-wrap pull-left">
-                                            <a className="like-btn">
+                                            <a // eslint-disable-line
+                                              className="like-btn"
+                                              onClick={this.handleLike}
+                                            >
                                                 <i className="fa fa-heart" aria-hidden="true" />
                                             </a>
-                                            <a className="lyric-btn">
+                                            <a // eslint-disable-line
+                                              className="lyric-btn"
+                                              onClick={this.toggleLyric}
+                                            >
                                                 <i className="lyric-icon" />
                                             </a>
-                                            <a className="voice-btn">
+                                            <a // eslint-disable-line
+                                              className="voice-btn"
+                                              onClick={this.handleVoice}
+                                            >
                                                 <i className="fa fa-volume-up" aria-hidden="true" />
                                             </a>
-                                            <a className="list-btn">
+                                            <a // eslint-disable-line
+                                              className="list-btn"
+                                              onClick={this.togglePlayList}
+                                            >
                                                 <i className="fa fa-list-ul" aria-hidden="true" />
                                             </a>
                                         </div>

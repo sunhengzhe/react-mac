@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import reqwest from 'reqwest';
-import Music from '../../../components/app/music/Music';
+import PropTypes from 'prop-types';
+import Music from 'components/app/music/Music';
+import ApiWrapper from '../reqwestWrapper';
 
 class MusicWrapper extends Component {
+
+    static propTypes = {
+        reqwest: PropTypes.func.isRequired,
+    }
 
     state = {
         musics: [],
     }
 
     componentWillMount() {
+        const { reqwest } = this.props;
         reqwest({
             url: '/api/music/list',
             type: 'json',
@@ -32,4 +38,4 @@ class MusicWrapper extends Component {
     }
 }
 
-export default MusicWrapper;
+export default ApiWrapper(MusicWrapper);

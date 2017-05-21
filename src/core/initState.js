@@ -8,11 +8,13 @@ import Firefox from '../components/app/firefox/manifest';
 import Intro from '../components/app/intro/manifest';
 import ColorPicker from '../components/app/colorpicker/manifest';
 import Photo from '../components/app/photo/manifest';
+import Wechat from '../components/app/wechat/manifest';
 
 export default {
     dockApps: [
         Intro,
         Launchpad,
+        Wechat,
         Music,
         ITerm,
         ColorPicker,
@@ -26,6 +28,7 @@ export default {
         ITerm,
         Music,
         ColorPicker,
+        Wechat,
     ],
     notifications: [],
 };

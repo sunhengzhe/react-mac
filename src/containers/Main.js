@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { connect } from 'react-redux';
-import Menu from '../components/menu/Menu';
-import Desktop from '../containers/desktop/Desktop';
-import Launchpad from '../containers/launchpad/Launchpad';
-import Notification from '../components/lib/notification/Notification';
+import Menu from 'components/menu/Menu';
+import Desktop from 'containers/desktop/Desktop';
+import Launchpad from 'containers/launchpad/Launchpad';
+import Notification from 'components/lib/notification/Notification';
+import { openApp } from 'reducers/openedApps';
+import { addNotification, removeNotification as removeNotificationCreator, clearNotification } from 'reducers/notifications';
+
 import Dock from './dock/Dock';
-import { openApp } from '../reducers/openedApps';
-import { addNotification, removeNotification as removeNotificationCreator, clearNotification } from '../reducers/notifications';
 import { throttle } from '../utils';
 
 class Main extends Component {

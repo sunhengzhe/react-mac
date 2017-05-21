@@ -1,10 +1,17 @@
 {
-  "main.css": "static/css/main.77579781.css",
-  "main.css.map": "static/css/main.77579781.css.map",
-  "main.js": "static/js/main.c2e3e02c.js",
-  "main.js.map": "static/js/main.c2e3e02c.js.map",
+  "main.css": "static/css/main.abaf275d.css",
+  "main.css.map": "static/css/main.abaf275d.css.map",
+  "main.js": "static/js/main.db534de1.js",
+  "main.js.map": "static/js/main.db534de1.js.map",
   "static/media/appstore.png": "static/media/appstore.6b3817b3.png",
+  "static/media/cola.jpg": "static/media/cola.f1515d36.jpg",
   "static/media/default-music.png": "static/media/default-music.22588b5d.png",
-  "static/media/icon.png": "static/media/icon.b7c55561.png",
-  "static/media/sky.jpg": "static/media/sky.c3c80bda.jpg"
+  "static/media/icon.png": "static/media/icon.270ebab6.png",
+  "static/media/judy.jpg": "static/media/judy.69626ac1.jpg",
+  "static/media/nick.jpg": "static/media/nick.5bb108bf.jpg",
+  "static/media/online-group.png": "static/media/online-group.76a2a492.png",
+  "static/media/shifen.jpg": "static/media/shifen.2535c7f3.jpg",
+  "static/media/shituotuo.jpg": "static/media/shituotuo.0319ae76.jpg",
+  "static/media/sky.jpg": "static/media/sky.c3c80bda.jpg",
+  "static/media/zhizunbao.jpg": "static/media/zhizunbao.923c9f25.jpg"
 }

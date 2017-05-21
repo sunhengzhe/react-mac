@@ -28,6 +28,11 @@
         "indent": [2, 4, { "SwitchCase": 1 }],
         "react/jsx-indent": [2, 4],
         "react/jsx-filename-extension": "off",
+        // 调整为警告
+        "react/self-closing-comp": 1,
+        "arrow-body-style": 1,
+        "no-unused-vars": 1,
+        "semi": 1,
         // 不禁用 console
         "no-console": "off",
         // 不强制函数表达式有名字

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { closeApp } from '../../reducers/openedApps';
-import { addNotification, removeNotification, clearNotification } from '../../reducers/notifications';
+import { closeApp } from 'reducers/openedApps';
+import { addNotification, removeNotification, clearNotification } from 'reducers/notifications';
 import './app.css';
 
 export default (

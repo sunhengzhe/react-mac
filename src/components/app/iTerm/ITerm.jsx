@@ -18,73 +18,23 @@ class ITerm extends Component {
         fullScreen: PropTypes.func.isRequired,
     }
 
-    constructor(...args) {
-        super(...args);
-
-        this.state = {
-            selectedText: [],
-            lines: [],
-            curLineIndex: 0,
-            cursorPos: 0,
-        };
-
-        document.addEventListener('keydown', (e) => {
-            const { curLineIndex, lines } = this.state;
-            const curLine = lines[curLineIndex];
-
-            const curText = curLine.text || '';
-            const curPos = curLine.cursorPos;
-
-            const keyCode = e.keyCode;
-
-            if (keyCode === 13) {
-                // 执行命令
-                this.exec(curText);
-            } else {
-                if (keyCode === 8) {
-                    if (curPos === 0) {
-                        return;
-                    }
-                    // 删除
-                    curLine.text = curText.slice(0, curPos - 1) + curText.slice(curPos);
-                    curLine.cursorPos -= 1;
-                } else if (keyCode === 37) {
-                    // 左移
-                    curLine.cursorPos -= 1;
-                } else if (keyCode === 39) {
-                    // 右移
-                    curLine.cursorPos += 1;
-                } else {
-                    if (!utils.isValidInput(keyCode)) {
-                        return;
-                    }
-                    // 输入
-                    curLine.text = curText.slice(0, curPos) + e.key + curText.slice(curPos);
-                    curLine.cursorPos += 1;
-                }
-
-                // 矫正光标位置
-                if (curLine.cursorPos < 0) {
-                    curLine.cursorPos = 0;
-                }
-
-                if (curLine.cursorPos >= curLine.text.length) {
-                    curLine.cursorPos = curLine.text.length;
-                }
-
-                this.setState({
-                    lines: [
-                        ...lines.splice(0, curLineIndex),
-                        curLine,
-                        ...lines.splice(curLineIndex),
-                    ],
-                });
-            }
-        });
-    }
+    state = {
+        selectedText: [],
+        lines: [],
+        curLineIndex: 0,
+        cursorPos: 0,
+    };
 
     componentWillMount() {
         this.init();
+    }
+
+    componentDidMount() {
+        document.addEventListener('keydown', this.handleKeyDown);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.handleKeyDown);
     }
 
     getNewLine = (attr = {}) => {
@@ -130,6 +80,60 @@ class ITerm extends Component {
             lines: [...lines, ...resultLines, newLine],
             curLineIndex: curLineIndex + resultLines.length + 1,
         });
+    }
+
+    handleKeyDown = (e) => {
+        const { curLineIndex, lines } = this.state;
+        const curLine = lines[curLineIndex];
+
+        const curText = curLine.text || '';
+        const curPos = curLine.cursorPos;
+
+        const keyCode = e.keyCode;
+
+        if (keyCode === 13) {
+            // 执行命令
+            this.exec(curText);
+        } else {
+            if (keyCode === 8) {
+                if (curPos === 0) {
+                    return;
+                }
+                // 删除
+                curLine.text = curText.slice(0, curPos - 1) + curText.slice(curPos);
+                curLine.cursorPos -= 1;
+            } else if (keyCode === 37) {
+                // 左移
+                curLine.cursorPos -= 1;
+            } else if (keyCode === 39) {
+                // 右移
+                curLine.cursorPos += 1;
+            } else {
+                if (!utils.isValidInput(keyCode)) {
+                    return;
+                }
+                // 输入
+                curLine.text = curText.slice(0, curPos) + e.key + curText.slice(curPos);
+                curLine.cursorPos += 1;
+            }
+
+            // 矫正光标位置
+            if (curLine.cursorPos < 0) {
+                curLine.cursorPos = 0;
+            }
+
+            if (curLine.cursorPos >= curLine.text.length) {
+                curLine.cursorPos = curLine.text.length;
+            }
+
+            this.setState({
+                lines: [
+                    ...lines.splice(0, curLineIndex),
+                    curLine,
+                    ...lines.splice(curLineIndex),
+                ],
+            });
+        }
     }
 
     render() {
