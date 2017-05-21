@@ -73,7 +73,7 @@ class Wechat extends Component {
         this.chatContentEle.scrollTop = this.chatContentEle.scrollHeight;
         this.input.focus();
         // 打开 socket
-        this.socket = io('http://localhost:3000/wechat');
+        this.socket = io('/wechat');
 
         /* socket 事件 */
         // 生成用户信息
