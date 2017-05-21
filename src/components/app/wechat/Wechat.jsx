@@ -106,6 +106,7 @@ class Wechat extends Component {
         // 获取聊天群人数
         this.socket.on('answer group total', (data) => {
             const { chatid, total } = data;
+            console.log(chatid, total);
             this.setState((state) => {
                 const { chatContent } = state;
                 chatContent[chatid].total = total;
@@ -128,7 +129,23 @@ class Wechat extends Component {
             });
         });
 
-        this.socket.emit('ask group total', this.state.curChatId);
+        // 有人加入
+        this.socket.on('someone enter', (data) => {
+            const { chatid, content } = data;
+            this.updateStateByMsg(chatid, {
+                content,
+                isSystem: true,
+            });
+        });
+
+        // 有人离开
+        this.socket.on('someone leave', (data) => {
+            const { chatid, content } = data;
+            this.updateStateByMsg(chatid, {
+                content,
+                isSystem: true,
+            });
+        });
     }
 
     componentWillUnmount() {
@@ -205,20 +222,8 @@ class Wechat extends Component {
         this.setState(state => {
             const { chatContent } = state;
 
-            const {
-                isMe,
-                content,
-                usernick,
-                usericon,
-            } = message;
-
             // 聊天界面中添加一行
-            chatContent[chatid].messages.push({
-                isMe,
-                content,
-                usericon,
-                usernick,
-            });
+            chatContent[chatid].messages.push(message);
 
             return {
                 ...state,
@@ -226,9 +231,16 @@ class Wechat extends Component {
                     // 更新聊天列表
                     ...state.chatList.map(chatItem => {
                         if (chatItem.chatid === chatid) {
+                            let content = '';
+                            if (message.isSystem || !chatItem.isGroup) {
+                                content = message.content;
+                            } else {
+                                content = `${message.usernick}:${message.content}`;
+                            }
+
                             return {
                                 ...chatItem,
-                                message: chatItem.isGroup ? `${usernick}:${content}` : content,
+                                message: content,
                                 time: moment().format('HH:mm'),
                             };
                         }
@@ -394,7 +406,14 @@ class Wechat extends Component {
                                     icon = curChat.usericon;
                                 }
 
-                                return (
+                                return message.isSystem ? (
+                                    <div
+                                      key={index} // eslint-disable-line
+                                      className="chat-line system"
+                                    >
+                                        { message.content }
+                                    </div>
+                                ) : (
                                     <div
                                       key={index} // eslint-disable-line
                                       className={`chat-line ${message.isMe ? 'me' : ''}`}
@@ -405,7 +424,17 @@ class Wechat extends Component {
                                               backgroundImage: `url(${icon})`,
                                           }}
                                         />
-                                        <p className="chat-message">
+                                        {
+                                            // 如果是群组，其他人要加上昵称
+                                            curChat.isGroup && !message.isMe ? (
+                                                <p className="chat-nick">{message.usernick}</p>
+                                            ) : ''
+                                        }
+                                        <p
+                                          className={`chat-message ${
+                                              curChat.isGroup && !message.isMe ? 'group' : ''
+                                          }`}
+                                        >
                                             { message.content }
                                         </p>
                                     </div>
