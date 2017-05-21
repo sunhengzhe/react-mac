@@ -1,6 +1,7 @@
+/* global io */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import cola from 'images/headers/cola';
+import defaultIcon from 'images/headers/default';
 import shituotuo from 'images/headers/shituotuo';
 import onlineGroupIcon from 'images/headers/online-group.png';
 import { moment } from 'utils';
@@ -26,12 +27,15 @@ class Wechat extends Component {
         // tab
         curTab: 'chat',
         // 用户头像
-        userIcon: cola,
+        usericon: defaultIcon,
+        // 用户昵称
+        usernick: '',
         // 当前所在的聊天界面
         curChatId: 'onlineGroup',
         chatList: [
             {
                 chatid: 'onlineGroup',
+                isGroup: true,
                 icon: onlineGroupIcon,
                 nick: '当前在线的闲人们',
                 message: '',
@@ -39,6 +43,7 @@ class Wechat extends Component {
             },
             {
                 chatid: 'robot',
+                isGroup: false,
                 icon: shituotuo,
                 nick: '阿哲的影分身',
                 message: '',
@@ -55,6 +60,7 @@ class Wechat extends Component {
             onlineGroup: {
                 isGroup: true,
                 usernick: '当前在线的闲人们',
+                total: 0,
                 messages: [],
             },
         },
@@ -66,12 +72,71 @@ class Wechat extends Component {
         };
         this.chatContentEle.scrollTop = this.chatContentEle.scrollHeight;
         this.input.focus();
+        // 打开 socket
+        this.socket = io('http://localhost:3000/wechat');
+
+        /* socket 事件 */
+        // 生成用户信息
+        this.socket.on('create userInfo', (data) => {
+            const createUserInfo = ({ usericon, usernick }) => {
+                this.props.addNotification({
+                    icon: usericon,
+                    title: usernick,
+                    content: `恭喜！你被分配到昵称：${usernick}`,
+                });
+
+                localStorage.setItem('wechatinfo', JSON.stringify({ usericon, usernick }));
+            };
+
+            const { usericon, usernick } = data;
+
+            this.setState({ usericon, usernick });
+
+            try {
+                const userinfo = JSON.parse(localStorage.getItem('wechatinfo'));
+
+                if (usericon !== userinfo.usericon || usernick !== userinfo.usernick) {
+                    createUserInfo(data);
+                }
+            } catch (e) {
+                createUserInfo(data);
+            }
+        });
+
+        // 获取聊天群人数
+        this.socket.on('answer group total', (data) => {
+            const { chatid, total } = data;
+            this.setState((state) => {
+                const { chatContent } = state;
+                chatContent[chatid].total = total;
+                return {
+                    ...state,
+                    chatContent: {
+                        ...chatContent,
+                    },
+                };
+            });
+        });
+
+        // 新消息
+        this.socket.on('wechat message', (data) => {
+            const { chatid, message, userInfo } = data;
+            this.updateStateByMsg(chatid, {
+                content: message,
+                isMe: false,
+                ...userInfo,
+            });
+        });
+
+        this.socket.emit('ask group total', this.state.curChatId);
     }
 
     componentWillUnmount() {
         document.onselectstart = function (e) {
             e.returnValue = false;
         };
+        // 关闭 socket
+        this.socket.close();
     }
 
     /**
@@ -87,7 +152,11 @@ class Wechat extends Component {
      * @memberof Wechat
      */
     selectChat = (chatid) => {
+        const { chatContent } = this.state;
         this.setState({ curChatId: chatid }, this.scrollToBottom);
+        if (chatContent[chatid].isGroup) {
+            this.socket.emit('ask group total', chatid);
+        }
     }
 
     changeTab = (tab) => {
@@ -113,10 +182,18 @@ class Wechat extends Component {
      * @memberof Wechat
      */
     sendMessage = (message) => {
-        const { curChatId } = this.state;
+        const { curChatId, usernick } = this.state;
         if (curChatId === 'robot') {
             // 机器人
             this.talkToRobot(message);
+        } else {
+            // 正常发消息
+            this.socket.emit('wechat message', { chatid: curChatId, message });
+            this.updateStateByMsg(curChatId, {
+                content: message,
+                isMe: true,
+                usernick,
+            });
         }
     }
 
@@ -124,14 +201,23 @@ class Wechat extends Component {
      * 根据消息更新微信状态
      * @memberof Wechat
      */
-    updateStateByMsg = (curChatId, message, isMe) => {
+    updateStateByMsg = (chatid, message) => {
         this.setState(state => {
             const { chatContent } = state;
 
-            // 聊天界面中添加一行
-            chatContent[curChatId].messages.push({
+            const {
                 isMe,
-                content: message,
+                content,
+                usernick,
+                usericon,
+            } = message;
+
+            // 聊天界面中添加一行
+            chatContent[chatid].messages.push({
+                isMe,
+                content,
+                usericon,
+                usernick,
             });
 
             return {
@@ -139,10 +225,10 @@ class Wechat extends Component {
                 chatList: [
                     // 更新聊天列表
                     ...state.chatList.map(chatItem => {
-                        if (chatItem.chatid === 'robot') {
+                        if (chatItem.chatid === chatid) {
                             return {
                                 ...chatItem,
-                                message,
+                                message: chatItem.isGroup ? `${usernick}:${content}` : content,
                                 time: moment().format('HH:mm'),
                             };
                         }
@@ -166,7 +252,10 @@ class Wechat extends Component {
         const { curChatId } = this.state;
 
         // 添加用户发送的话
-        this.updateStateByMsg(curChatId, message, true);
+        this.updateStateByMsg(curChatId, {
+            content: message,
+            isMe: true,
+        });
 
         sendMessage({
             message,
@@ -174,7 +263,10 @@ class Wechat extends Component {
         }).then((resp) => {
             const { data } = resp;
 
-            this.updateStateByMsg(data.chatid, data.message, false);
+            this.updateStateByMsg(data.chatid, {
+                content: data.message,
+                isMe: false,
+            });
         });
     }
 
@@ -200,7 +292,7 @@ class Wechat extends Component {
 
     render() {
         const { DraggableArea, closeApp } = this.props;
-        const { userIcon, chatList, curChatId, chatContent, curTab } = this.state;
+        const { usericon, chatList, curChatId, chatContent, curTab } = this.state;
         const curChat = chatContent[curChatId];
 
         return (
@@ -224,7 +316,7 @@ class Wechat extends Component {
                     <i
                       className="head-icon"
                       style={{
-                          backgroundImage: `url(${userIcon})`,
+                          backgroundImage: `url(${usericon})`,
                       }}
                     />
 
@@ -280,7 +372,10 @@ class Wechat extends Component {
                 </div>
                 <div className="body">
                     <DraggableArea className="chat-header">
-                        { curChat.usernick }
+                        {
+                            curChat.isGroup ? `${curChat.usernick} (${curChat.total})`
+                            : curChat.usernick
+                        }
                     </DraggableArea>
                     <div
                       className="chat-content"
@@ -289,8 +384,14 @@ class Wechat extends Component {
                         {
                             curChat.messages.map((message, index) => {
                                 let icon = null;
-                                if (!curChat.isGroup) {
-                                    icon = message.isMe ? userIcon : curChat.usericon;
+                                if (message.isMe) {
+                                    icon = usericon;
+                                } else if (curChat.isGroup) {
+                                    // 群组聊天
+                                    icon = message.usericon;
+                                } else {
+                                    // 单聊
+                                    icon = curChat.usericon;
                                 }
 
                                 return (

@@ -28,6 +28,7 @@ export default wrapApp(({
                         <li>3、iTerm</li>
                         <li>4、色彩板</li>
                         <li>5、网易云音乐</li>
+                        <li>6、微信</li>
                     </ul>
                     <p>部分 app 支持放大，放大后鼠标移动至屏幕顶端和左端唤出菜单和 Dock。使用 shift + , 和 shift + . 进行屏幕切换。</p>
                     <p>如有问题，欢迎随时和我联系</p>
