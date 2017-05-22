@@ -14,6 +14,8 @@ import './wechat.css';
 
 const tabs = ['chat', 'contact', 'collect'];
 
+const WECHAT_SOCKET_URL = process.env.WECHAT_SOCKET_URL;
+
 class Wechat extends Component {
 
     static propTypes = {
@@ -66,6 +68,23 @@ class Wechat extends Component {
         },
     }
 
+    componentWillMount() {
+        // 随机生成一句问候
+        const messages = [
+            '你好呀',
+            '好久不见，想我了不',
+            '你是谁？',
+            '你知道我是谁不',
+            '好无聊啊',
+            '哎呀',
+        ];
+
+        this.updateStateByMsg('robot', {
+            isMe: false,
+            content: messages[Math.floor(Math.random() * messages.length)],
+        });
+    }
+
     componentDidMount() {
         document.onselectstart = function (e) {
             e.returnValue = true;
@@ -73,7 +92,7 @@ class Wechat extends Component {
         this.chatContentEle.scrollTop = this.chatContentEle.scrollHeight;
         this.input.focus();
         // 打开 socket
-        this.socket = io('http://47.93.21.106:3000/wechat');
+        this.socket = io(WECHAT_SOCKET_URL);
 
         /* socket 事件 */
         // 生成用户信息
@@ -106,7 +125,6 @@ class Wechat extends Component {
         // 获取聊天群人数
         this.socket.on('answer group total', (data) => {
             const { chatid, total } = data;
-            console.log(chatid, total);
             this.setState((state) => {
                 const { chatContent } = state;
                 chatContent[chatid].total = total;
@@ -169,11 +187,8 @@ class Wechat extends Component {
      * @memberof Wechat
      */
     selectChat = (chatid) => {
-        const { chatContent } = this.state;
         this.setState({ curChatId: chatid }, this.scrollToBottom);
-        if (chatContent[chatid].isGroup) {
-            this.socket.emit('ask group total', chatid);
-        }
+        this.input.focus();
     }
 
     changeTab = (tab) => {
@@ -216,9 +231,19 @@ class Wechat extends Component {
 
     /**
      * 根据消息更新微信状态
+     * message = {
+     *     isSystem: false,
+     *     isMe: false,
+     *     usericon,
+     *     usernick,
+     *     content,
+     * }
      * @memberof Wechat
      */
-    updateStateByMsg = (chatid, message) => {
+    updateStateByMsg = (
+        chatid,
+        message,
+    ) => {
         this.setState(state => {
             const { chatContent } = state;
 

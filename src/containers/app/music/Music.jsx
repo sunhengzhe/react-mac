@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Music from 'components/app/music/Music';
+import icon from 'components/app/wechat/icon';
 import ApiWrapper from '../reqwestWrapper';
 
 class MusicWrapper extends Component {
@@ -38,4 +39,6 @@ class MusicWrapper extends Component {
     }
 }
 
-export default ApiWrapper(MusicWrapper);
+export default ApiWrapper(MusicWrapper, {
+    icon,
+});
