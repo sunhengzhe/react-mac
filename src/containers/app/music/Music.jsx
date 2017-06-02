@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Music from 'components/app/music/Music';
-import icon from 'components/app/wechat/icon';
+import icon from 'components/app/music/icon';
 import ApiWrapper from '../reqwestWrapper';
 
 class MusicWrapper extends Component {

@@ -39,7 +39,7 @@ class Wechat extends Component {
                 chatid: 'onlineGroup',
                 isGroup: true,
                 icon: onlineGroupIcon,
-                nick: '当前在线的闲人们',
+                nick: '当前在线的小伙伴们',
                 message: '',
                 time: '',
             },
@@ -61,7 +61,7 @@ class Wechat extends Component {
             },
             onlineGroup: {
                 isGroup: true,
-                usernick: '当前在线的闲人们',
+                usernick: '当前在线的小伙伴们',
                 total: 0,
                 messages: [],
             },
@@ -135,6 +135,12 @@ class Wechat extends Component {
                     },
                 };
             });
+            if (total === 1) {
+                this.updateStateByMsg(chatid, {
+                    content: '当前没有其他小伙伴在线，快邀请你的小伙伴加入吧',
+                    isSystem: true,
+                });
+            }
         });
 
         // 新消息
@@ -164,6 +170,13 @@ class Wechat extends Component {
                 isSystem: true,
             });
         });
+
+        this.socket.on('connect_error', () => {
+            this.updateStateByMsg('onlineGroup', {
+                content: '网络异常，先去和阿哲的影分身聊天吧~',
+                isSystem: true,
+            });
+        })
     }
 
     componentWillUnmount() {

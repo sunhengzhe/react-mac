@@ -35,7 +35,7 @@ export default (
                 addNotification({
                     icon,
                     title: '网络瘫痪',
-                    content: '我感觉是你的网路有问题',
+                    content: '我感觉是你的网络有问题',
                 });
             });
         })

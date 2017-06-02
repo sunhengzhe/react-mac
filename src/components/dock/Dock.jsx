@@ -31,7 +31,6 @@ const Dock = ({
                               // 如果是 launchpad
                               toggleLaunchpad();
                           } else {
-                              console.log('clicked ', app.appid);
                               changeScreen(0);
                               hideLaunchpad();
                               openApp(app.appid);
