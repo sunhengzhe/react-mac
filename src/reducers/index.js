@@ -5,6 +5,7 @@ import allApps from './allApps';
 import notifications from './notifications';
 import launchpad from './launchpad';
 import screens from './screens';
+import topApp from './topApp';
 
 export default combineReducers({
     openedApps,
@@ -13,4 +14,5 @@ export default combineReducers({
     notifications,
     launchpad,
     screens,
+    topApp,
 });

@@ -9,10 +9,15 @@ export default (
     WrappedComponent,
     options = {},
 ) => {
+    if (!options.appid) {
+        throw new Error(`appid is required for App. Check ${WrappedComponent}`);
+    }
+
     class App extends Component {
 
         static propTypes = {
             fullScreen: PropTypes.func.isRequired,
+            topApp: PropTypes.string.isRequired,
         }
 
         constructor(...args) {
@@ -108,20 +113,28 @@ export default (
         }
 
         render() {
+            const { topApp } = this.props;
             const { fullScreen, screenIndex } = this.state;
+            // app 样式
+            const appStyle = fullScreen ? {
+                transform: `translateX(${screenIndex * 100}%)`,
+                MozTransform: `translateX(${screenIndex * 100}%)`,
+                WebkitTransform: `translateX(${screenIndex * 100}%)`,
+            } : {
+                top: this.pos.y,
+                left: this.pos.x,
+            };
+
+            if (topApp === options.appid) {
+                // 是置顶 app
+                appStyle.zIndex = +(`${+new Date()}`.slice(5, -3));
+            }
+
             return (
                 <div
                   ref={(ele) => (this.ele = ele)}
                   className={`app ${fullScreen ? 'full-screen' : ''}`}
-                  style={fullScreen ? {
-                      transform: `translateX(${screenIndex * 100}%)`,
-                      MozTransform: `translateX(${screenIndex * 100}%)`,
-                      WebkitTransform: `translateX(${screenIndex * 100}%)`,
-                  } : {
-                      top: this.pos.y,
-                      left: this.pos.x,
-                      zIndex: +(`${+new Date()}`.slice(5, -3)),
-                  }}
+                  style={appStyle}
                   onMouseDown={this.onAppMouseDown}
                 >
                     <WrappedComponent

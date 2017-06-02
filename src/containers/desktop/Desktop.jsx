@@ -7,6 +7,7 @@ import { addScreen, goPrevScreen, goNextScreen } from '../../reducers/screens';
 const mapStateToProps = (state) => ({
     openedApps: state.openedApps,
     screens: state.screens,
+    topApp: state.topApp,
 });
 
 const mapDispatchToProps = (dispatch) => ({

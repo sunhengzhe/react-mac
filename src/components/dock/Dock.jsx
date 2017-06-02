@@ -10,6 +10,7 @@ const Dock = ({
     hideLaunchpad,
     toggleLaunchpad,
     changeScreen,
+    changeTopApp,
 }) => (
     <div className="dock">
         {
@@ -30,9 +31,11 @@ const Dock = ({
                               // 如果是 launchpad
                               toggleLaunchpad();
                           } else {
+                              console.log('clicked ', app.appid);
                               changeScreen(0);
                               hideLaunchpad();
                               openApp(app.appid);
+                              changeTopApp(app.appid);
                           }
                       }}
                     >
@@ -51,6 +54,7 @@ Dock.propTypes = {
     hideLaunchpad: PropTypes.func.isRequired,
     toggleLaunchpad: PropTypes.func.isRequired,
     changeScreen: PropTypes.func.isRequired,
+    changeTopApp: PropTypes.func.isRequired,
 };
 
 export default Dock;

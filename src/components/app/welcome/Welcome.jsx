@@ -45,6 +45,7 @@ export default wrapApp(({
         </DraggableArea>
     );
 }, {
+    appid: manifest.appid,
     initWidth: 360,
     initHeight: 320,
 });

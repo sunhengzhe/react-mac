@@ -20,6 +20,8 @@ class Desktop extends Component {
         addScreen: PropTypes.func.isRequired,
         goPrevScreen: PropTypes.func.isRequired,
         goNextScreen: PropTypes.func.isRequired,
+        // 当前置顶的 app
+        topApp: PropTypes.string.isRequired,
     }
 
     componentDidMount() {
@@ -65,7 +67,7 @@ class Desktop extends Component {
     }
 
     render() {
-        const { openedApps, screens } = this.props;
+        const { openedApps, screens, topApp } = this.props;
         return (
             <div
               className="desktop"
@@ -83,6 +85,7 @@ class Desktop extends Component {
                             <App
                               key={appid}
                               fullScreen={this.addFullScreen}
+                              topApp={topApp}
                             />
                         );
                     })

@@ -3,6 +3,7 @@ import Dock from '../../components/dock/Dock';
 import { openApp } from '../../reducers/openedApps';
 import { toggleLaunchpad, hideLaunchpad } from '../../reducers/launchpad';
 import { changeScreen } from '../../reducers/screens';
+import { changeTopApp } from '../../reducers/topApp';
 
 const mapStateToProps = (state) => ({
     apps: state.dockApps,
@@ -21,6 +22,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     changeScreen: (index) => {
         dispatch(changeScreen(index));
+    },
+    changeTopApp: (appid) => {
+        dispatch(changeTopApp(appid));
     },
 });
 

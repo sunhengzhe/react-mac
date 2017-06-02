@@ -239,6 +239,7 @@ class Intro extends Component {
 }
 
 export default wrapApp(Intro, {
+    appid: manifest.appid,
     initWidth: 320,
     initHeight: 480,
 });

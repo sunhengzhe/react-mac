@@ -196,6 +196,7 @@ class ColorPicker extends Component {
 }
 
 export default wrapApp(ColorPicker, {
+    appid: manifest.appid,
     initWidth: 800,
     initHeight: 500,
 });

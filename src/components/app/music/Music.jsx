@@ -356,4 +356,6 @@ class Music extends Component {
     }
 }
 
-export default wrapApp(Music);
+export default wrapApp(Music, {
+    appid: manifest.appid,
+});
